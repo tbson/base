@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# setup appname newdomain.com pro
+# setup appname newdomain.com dev
+
+NGINX_CONFIG=conf.d/nginx.conf
+APP_SECRET=`python3 -c 'import random; result = "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789(-_=+)") for i in range(50)]); print(result)'`
+DB_PASSWORD=`python3 -c 'import random; result = "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789(-_=+)") for i in range(50)]); print(result)'`
+COUCHDB_PASSWORD=`python3 -c 'import random; result = "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789(-_=+)") for i in range(50)]); print(result)'`
+COMMAND="command: bash -c \"python manage.py migrate \&\& uvicorn core.asgi:application --host 0.0.0.0 --port 4000\""
+# COMMAND="command: bash -c \"python manage.py migrate \&\& gunicorn core.wsgi -b 0.0.0.0:4000\""
+TTY="tty: true"
+
+# Config nginx
+cp "conf.default/$3.conf" $NGINX_CONFIG
+sed -i -e 's/my\.domain/'"$2"'/g' $NGINX_CONFIG
+sed -i -e 's/__app_name__/'"$1"'/g' $NGINX_CONFIG
+rm -f "${NGINX_CONFIG}-e"
+
+# Config docker compose
+cp docker-compose/default.yml docker-compose.yml
+sed -i -e 's/__app_name__/'"$1"'/g' docker-compose.yml
+sed -i -e 's/my\.domain/'"$2"'/g' docker-compose.yml
+sed -i -e 's/__app_secret__/'"$APP_SECRET"'/g' docker-compose.yml
+if [[ "$3" == pro ]]; then
+    sed -i -e 's/__db_password__/'"$DB_PASSWORD"'/g' docker-compose.yml
+    sed -i -e 's/__couchdb_password__/'"$DB_PASSWORD"'/g' docker-compose.yml
+    sed -i -e 's/__app_command__/'"$COMMAND"'/g' docker-compose.yml
+    sed -i -e 's/__ssl_folder__/\/etc\/letsencrypt/g' docker-compose.yml
+else
+    sed -i -e 's/__db_password__/postgres/g' docker-compose.yml
+    sed -i -e 's/__couchdb_password__/couchdb/g' docker-compose.yml
+    sed -i -e 's/__app_command__/'"$TTY"'/g' docker-compose.yml
+    sed -i -e 's/__ssl_folder__/.\/ssl/g' docker-compose.yml
+fi
+sed -i -e 's/__app_env__/'"$3"'/g' docker-compose.yml
+rm -f docker-compose.yml-e
