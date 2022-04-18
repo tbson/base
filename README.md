@@ -33,30 +33,30 @@ Only use really needed one
 
 # Install
 
-Step 1: Prepare configuration files:
+**Step 1**: Prepare configuration files:
 
 ```
 cp docker/conf.d/default.conf.default docker/conf.d/default.conf
 cp docker/.env.default docker/.env
 ```
 
-Step 2: Add `base.test` domain to `hosts` file by append this line at file's bottom:
+**Step 2**: Add `base.test` domain to `hosts` file (`/etc/hosts` on Mac/Linux) by append this line at file's bottom:
 
 ```
 127.0.0.1       base.test
 ```
 
-Step 3: Install root CA at `docker/ssl/localca.pem`: [tutorial](https://support.securly.com/hc/en-us/articles/206058318-How-to-install-the-Securly-SSL-certificate-on-Mac-OSX-)
+**Step 3**: Install root CA at `docker/ssl/localca.pem`: [tutorial](https://support.securly.com/hc/en-us/articles/206058318-How-to-install-the-Securly-SSL-certificate-on-Mac-OSX-)
 
 
-Step 4: Build docker
+**Step 4**: Build docker
 
 ```
 cd docker
 ./exec build
 ```
 
-Step 5: Run one-time setup
+**Step 5**: Run one-time setup
 
 ```
 ./exec manage.py migrate
@@ -64,7 +64,7 @@ Step 5: Run one-time setup
 ./exec manage.py cmd_account_seeding
 ```
 
-Step 6: Run backend and frontend server at separated terminal tab
+**Step 6**: Run backend and frontend server at separated terminal tab
 
 ```
 ./exec bserver
