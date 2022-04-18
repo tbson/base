@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS("Start..."))
-        password = "Qwerty!@#456"
+        password = "SamplePassword123!@#"
         # Create super user
         try:
             user = User.objects.create_user(
@@ -36,14 +36,7 @@ class Command(BaseCommand):
                 "first_name": "Admin",
                 "last_name": "Localhost",
                 "groups": [staff_group.pk],
-            },
-            {
-                "email": "tbson87@gmail.com",
-                "phone_number": "+84906696527",
-                "first_name": "Son",
-                "last_name": "Tran",
-                "groups": [staff_group.pk],
-            },
+            }
         ]
 
         for data in staff_list:

@@ -8,23 +8,19 @@ tags
 
 
 docker/dbdata/
-docker/couchdata/
 docker/conf.d/*.conf
 docker/.env
-docker/firebase/key.json
 docker/db_backup/*.sql
 
 __pycache__
 api/logs/*.log
 api/.coverage
 api/.elixir_ls/
-api/kpi.config.json
 api/public/static
 api/public/media
 api/public/clients
 api/public/client
 api/_build/
-api/init.sql
 api/cover/
 api/deps/
 api/doc/
