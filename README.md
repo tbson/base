@@ -24,6 +24,8 @@ Only use really needed one
 ## Features
 
 - Build in dashboard
-- Multiple language support
+- Use React hooks for most of taks
+- Recoil help to dealth with global state if needed.
+- Multiple language support. `PoEdit` and `makemessages`/`dumpmessages` do all managing tasks.
 - Unit test support
 - Abstract away HTTP request operations
