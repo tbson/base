@@ -60,6 +60,16 @@ services:
         tty: ${DOCKER_TTY}
         command: ${DOCKER_COMMAND}
 
+    base_web:
+      container_name: base_web 
+      build:
+        context: ../web
+        dockerfile: ../docker/dockerfiles/web
+      volumes:
+        - ../web:/code:delegated
+        - /code/node_modules
+      tty: ${DOCKER_TTY}
+
     base_nginx:
         container_name: base_nginx
         build:

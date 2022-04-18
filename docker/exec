@@ -23,6 +23,7 @@ help () {
     echo "bserver           :  run phoenix dev server"
     echo "btest             :  run test"
     echo "fserver           :  run webpack dev server"
+    echo "yarn              :  run yarn"
     echo "pip               :  run pip command on api service"
     echo "manage.py         :  run manage.y"
     echo "api <args>        :  execute random command on api service, ex: ./exec api ls"
@@ -35,8 +36,14 @@ if [ "$FIRST_ARG" == "-h" ]; then
     exit 0
 fi
 
-if [ "$FIRST_ARG" == "api" ] || [ "$FIRST_ARG" == "db" ]; then
+if [ "$FIRST_ARG" == "api" ] || [ "$FIRST_ARG" == "db" ] || [ "$FIRST_ARG" == "web" ]; then
     docker compose exec "$INSTANCE_NAME"_"$FIRST_ARG" $ARGS
+elif [ "$FIRST_ARG" == "yarn" ]; then
+    docker compose exec "$INSTANCE_NAME"_web yarn $ARGS
+elif [ "$FIRST_ARG" == "fserver" ]; then
+    docker compose exec "$INSTANCE_NAME"_web yarn dev
+elif [ "$FIRST_ARG" == "ftest" ]; then
+    docker compose exec "$INSTANCE_NAME"_web yarn test $ARGS
 elif [ "$FIRST_ARG" == "pip" ]; then
     docker compose exec "$INSTANCE_NAME"_api pip $ARGS
     docker compose exec "$INSTANCE_NAME"_api pip freeze > ../api/requirements.txt
