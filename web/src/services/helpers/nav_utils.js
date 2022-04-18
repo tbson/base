@@ -52,7 +52,7 @@ export default class NavUtils {
             loginUrl = `${loginUrl}?next=${currentUrl}`;
         }
         if (navigate) {
-            Utils.navigateTo(navigate)(loginUrl);
+            NavUtils.navigateTo(navigate)(loginUrl);
         } else {
             window.location.href = `/#${loginUrl}`;
         }
