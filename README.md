@@ -23,6 +23,7 @@ Only use really needed one
 
 ## Features
 
+- JSDoc support
 - Build in dashboard
 - Use React hooks for most of taks
 - Recoil help to dealth with global state if needed.
