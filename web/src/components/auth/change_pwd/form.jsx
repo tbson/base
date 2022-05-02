@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Row, Col, Form, Input } from "antd";
 import FormUtils from "services/helpers/form_utils";
-import { urls } from "../../config";
+import { urls } from "../config";
 
 const formName = "ChangePwdForm";
 

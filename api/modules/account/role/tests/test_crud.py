@@ -3,8 +3,8 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 from django.contrib.auth.models import Group as Role, Permission
 from services.helpers.token_utils import TokenUtils
-from modules.account.staff.helpers.model_utils import StaffModelUtils
-from ..helpers.model_utils import RoleModelUtils
+from modules.account.staff.helpers.utils import StaffUtils
+from ..helpers.utils import RoleUtils
 
 # Create your tests here.
 
@@ -13,9 +13,7 @@ class RoleTestCase(TestCase):
     def setUp(self):
         self.base_url = "/api/v1/account/role/"
         self.base_url_params = "/api/v1/account/role/{}"
-        self.model_utils = RoleModelUtils()
-        staff_model_utils = StaffModelUtils()
-        staff = staff_model_utils.seeding(1, True)
+        staff = StaffUtils.seeding(1, True)
         staff.user.is_staff = True
         staff.user.save()
 
@@ -24,7 +22,7 @@ class RoleTestCase(TestCase):
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
 
-        self.items = self.model_utils.seeding(3)
+        self.items = RoleUtils.seeding(3)
 
     def test_list(self):
         response = self.client.get(self.base_url)
@@ -42,8 +40,8 @@ class RoleTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_create(self):
-        item3 = self.model_utils.seeding(3, True, False)
-        item4 = self.model_utils.seeding(4, True, False)
+        item3 = RoleUtils.seeding(3, True, False)
+        item4 = RoleUtils.seeding(4, True, False)
 
         # Add duplicate
         response = self.client.post(
@@ -59,7 +57,7 @@ class RoleTestCase(TestCase):
         self.assertEqual(Role.objects.count(), 4)
 
     def test_edit(self):
-        item3 = self.model_utils.seeding(3, True, False)
+        item3 = RoleUtils.seeding(3, True, False)
 
         # Update not exist
         response = self.client.put(

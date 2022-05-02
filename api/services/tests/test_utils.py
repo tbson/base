@@ -298,12 +298,3 @@ class GetTupleValue(SimpleTestCase):
         output = Utils.get_tuple_value(input_tuple, key, "hello")
         eput = "hello"
         self.assertEqual(output, eput)
-
-
-class ParseExp(SimpleTestCase):
-    def test_happy_case(self):
-        exp = "weight * (achieve / expected)"
-        param = dict(weight=0.5, achieve=2, expected=4)
-        output = Utils.parse_exp(exp, param)
-        eput = 0.25
-        self.assertEqual(output, eput)

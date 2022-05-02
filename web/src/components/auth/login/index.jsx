@@ -23,7 +23,7 @@ export default function Login() {
         StorageUtils.getToken() && navigateTo();
     }, []);
 
-    function onLogin(data) {
+    function handleLogin(data) {
         const nextUrl = window.location.href.split("next=")[1] || "/";
         StorageUtils.setStorage("auth", data);
         navigateTo(nextUrl);
@@ -49,7 +49,7 @@ export default function Login() {
                     lg={{ span: 8, offset: 8 }}
                 >
                     <Card title="Đăng nhập" style={styles.wrapper}>
-                        <Form onChange={onLogin}>
+                        <Form onChange={handleLogin}>
                             <>
                                 <Button
                                     type="link"

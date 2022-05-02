@@ -3,7 +3,7 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 from services.helpers.token_utils import TokenUtils
 from ..models import Staff
-from ..helpers.model_utils import StaffModelUtils
+from ..helpers.utils import StaffUtils
 
 # Create your tests here.
 
@@ -12,8 +12,7 @@ class StaffTestCase(TestCase):
     def setUp(self):
         self.base_url = "/api/v1/account/staff/"
         self.base_url_params = "/api/v1/account/staff/{}"
-        self.model_utils = StaffModelUtils()
-        staff = self.model_utils.seeding(1, True)
+        staff = StaffUtils.seeding(1, True)
         staff.user.is_staff = True
         staff.user.save()
 
@@ -22,7 +21,7 @@ class StaffTestCase(TestCase):
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
 
-        self.items = self.model_utils.seeding(3)
+        self.items = StaffUtils.seeding(3)
 
     def test_list(self):
         resp = self.client.get(self.base_url)
@@ -40,8 +39,8 @@ class StaffTestCase(TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_create(self):
-        item3 = self.model_utils.seeding(3, True, False)
-        item4 = self.model_utils.seeding(4, True, False)
+        item3 = StaffUtils.seeding(3, True, False)
+        item4 = StaffUtils.seeding(4, True, False)
 
         # Add duplicate
         resp = self.client.post(
@@ -59,7 +58,7 @@ class StaffTestCase(TestCase):
         self.assertEqual(Staff.objects.count(), 4)
 
     def test_edit(self):
-        item2 = self.model_utils.seeding(2, True, False)
+        item2 = StaffUtils.seeding(2, True, False)
 
         # Update not exist
         resp = self.client.put(

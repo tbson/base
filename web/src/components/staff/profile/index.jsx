@@ -4,10 +4,10 @@ import { KeyOutlined, UserOutlined } from "@ant-design/icons";
 import Wrapper from "services/components/wrapper";
 import PageHeading from "services/components/page_heading";
 import RequestUtils from "services/helpers/request_utils";
+import ChangePwd from "components/auth/change_pwd";
 import { urls, messages } from "../config";
-import Sumarry from "./summary";
+import ProfileSummary from "./summary";
 import UpdateProfile from "./update_profile";
-import ChangePwd from "./change_pwd";
 
 export const emptyProfile = {
     id: 0,
@@ -33,7 +33,7 @@ export default function Profile() {
                     <>{messages.heading}</>
                 </PageHeading>
                 <div className="content">
-                    <Sumarry {...profileData} />
+                    <ProfileSummary {...profileData} />
                     <Divider />
                     <Button
                         htmlType="button"

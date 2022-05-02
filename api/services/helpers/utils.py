@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Union
+from typing import List, Dict, Any
 import re
 import os
 import sys
@@ -11,10 +11,8 @@ import itertools
 from datetime import date, datetime, timedelta
 import pytz
 import requests
-import magic
 import phonenumbers
 from PIL import Image
-from py_expression_eval import Parser
 from rest_framework.renderers import JSONRenderer
 from django.utils.translation import gettext as _
 from django.utils.text import slugify
@@ -23,11 +21,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
-from rest_framework_jwt.settings import api_settings
-
-LOOP = asyncio.new_event_loop()
-asyncio.set_event_loop(LOOP)
+from rest_framework_simplejwt.serializers import TokenVerifySerializer
+from rest_framework_simplejwt.settings import api_settings
 
 MONTH_MAP = {
     1: 1,
@@ -53,6 +48,22 @@ QUATER_MAP = {
 
 
 class Utils:
+    @staticmethod
+    def get_loop():
+        def create_looop():
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            return loop
+
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_closed():
+                loop = create_looop()
+        except Exception:
+            loop = create_looop()
+
+        return loop
+
     @staticmethod
     def return_exception(e):
         exc_tb = sys.exc_info()[2]
@@ -242,62 +253,6 @@ class Utils:
                     os.remove(thumbnail)
 
     @staticmethod
-    def check_mime(file_buffer):
-        mime_type = magic.from_buffer(file_buffer.read(), mime=True)
-        mime_source = {
-            "image": [
-                "image/gif",
-                "image/jpeg",
-                "image/png",
-                "image/psd",
-                "image/bmp",
-                "image/tiff",
-                "image/tiff",
-                "image/jp2",
-                "image/iff",
-                "image/vnd.wap.wbmp",
-                "image/xbm",
-                "image/vnd.microsoft.icon",
-            ],
-            "pdf": [
-                "application/pdf",
-            ],
-            "text": [
-                "text/plain",
-            ],
-            "document": [
-                "application/msword",
-                "application/octet-stream",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/vnd.ms-word.document.macroenabled.12",
-            ],
-            "spreadsheet": [
-                "application/excel",
-                "application/vnd.ms-excel",
-                "application/x-excel",
-                "application/x-msexcel",
-                "application/vnd.ms-excel.sheet.binary.macroenabled.12",
-                "application/vnd.ms-excel.sheet.macroenabled.12",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            ],
-            "archive": [
-                "application/x-rar-compressed",
-                "application/x-rar",
-                "application/zip",
-                "application/x-tar",
-                "application/x-7z-compressed",
-                "application/gzip",
-                "application/tar",
-                "application/tar+gzip",
-                "application/x-gzip",
-            ],
-        }
-        for filetype, list_mime_type in mime_source.items():
-            if mime_type in list_mime_type:
-                return filetype
-        return ""
-
-    @staticmethod
     def send_email(subject, body, to):
         try:
             if settings.EMAIL_ENABLE is not True or settings.TESTING:
@@ -324,13 +279,13 @@ class Utils:
 
     @staticmethod
     def async_exec(func, *args):
-        LOOP.run_in_executor(None, func, *args)
+        Utils.get_loop().run_in_executor(None, func, *args)
 
     @staticmethod
     def user_from_token(token):
         try:
             token = {"token": token}
-            data = VerifyJSONWebTokenSerializer().validate(token)
+            data = TokenVerifySerializer().validate(token)
             return data["user"]
         except Exception:
             return None
@@ -551,11 +506,9 @@ class Utils:
 
     @staticmethod
     def get_lang_code(request) -> str:
-        lang_code = request.META.get(
-            "HTTP_ACCEPT_LANGUAGE", settings.DEFAULT_LANGUAGE_CODE
-        )
-        if lang_code not in ["en", "vi"]:
-            lang_code = settings.DEFAULT_LANGUAGE_CODE
+        lang_code = request.META.get("HTTP_ACCEPT_LANGUAGE", settings.LANGUAGE_CODE)
+        if lang_code not in ["en-us", "vi-vn"]:
+            lang_code = settings.LANGUAGE_CODE
         return lang_code
 
     @staticmethod
@@ -601,28 +554,6 @@ class Utils:
             second_part = date_arr[1][3:]
             return first_part + second_part
         return None
-
-    @staticmethod
-    def send_slack_message(message):
-        if settings.EXTRA_DEBUG is False:
-            return
-        if isinstance(message, dict):
-            message = str(message)
-        elif isinstance(message, Exception):
-            message = Utils.return_exception(message)
-        elif isinstance(message, str):
-            pass
-        else:
-            return
-
-        def func(message):
-            webhook_url = settings.SLACK_WEBHOOK_URL
-            payload = {"text": message}
-            requests.post(
-                webhook_url, json=payload, headers={"Content-Type": "application/json"}
-            )
-
-        Utils.async_exec(func, message)
 
     @staticmethod
     def validate_captcha(request):
@@ -716,13 +647,6 @@ class Utils:
     @staticmethod
     def flat_2d_list(items: List[Any]) -> List[Any]:
         return list(set(itertools.chain.from_iterable(items)))
-
-    @staticmethod
-    def parse_exp(exp: str, params: Dict = None) -> Union[int, float]:
-        if not params:
-            params = {}
-        parser = Parser()
-        return parser.parse(exp).evaluate(params)
 
     @staticmethod
     def get_current_quater() -> int:

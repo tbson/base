@@ -4,7 +4,8 @@ const urlMap = {
     base: {
         prefix: "account/staff",
         endpoints: {
-            crud: ""
+            crud: "",
+            profile: "profile"
         }
     }
 };

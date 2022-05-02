@@ -19,9 +19,7 @@ export default function ProfileSummary(data) {
                 <Col span={6}>
                     <strong>Họ và tên</strong>
                 </Col>
-                <Col span={18}>
-                    {data.last_name} {data.first_name}
-                </Col>
+                <Col span={18}>{data.full_name}</Col>
             </Row>
         </div>
     );

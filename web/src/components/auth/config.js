@@ -2,15 +2,18 @@ import RequestUtils from "services/helpers/request_utils";
 
 const urlMap = {
     base: {
-        prefix: "account/staff",
+        prefix: "account/user",
         endpoints: {
-            profile: "profile",
             login: "login",
-
-            signup: "signup",
             signupConfirm: "signup-confirm",
             resetPassword: "reset-password",
             changePassword: "change-password"
+        }
+    },
+    staff: {
+        prefix: "account/staff",
+        endpoints: {
+            profile: "profile"
         }
     },
     verif: {

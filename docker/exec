@@ -24,7 +24,7 @@ help () {
     echo "btest             :  run test"
     echo "fserver           :  run webpack dev server"
     echo "yarn              :  run yarn"
-    echo "pip               :  run pip command on api service"
+    echo "poetry            :  run poetry command on api service"
     echo "manage.py         :  run manage.y"
     echo "api <args>        :  execute random command on api service, ex: ./exec api ls"
     echo "api-upgrade       :  upgrade api dependencies",
@@ -44,13 +44,12 @@ elif [ "$FIRST_ARG" == "fserver" ]; then
     docker compose exec "$INSTANCE_NAME"_web yarn dev
 elif [ "$FIRST_ARG" == "ftest" ]; then
     docker compose exec "$INSTANCE_NAME"_web yarn test $ARGS
-elif [ "$FIRST_ARG" == "pip" ]; then
-    docker compose exec "$INSTANCE_NAME"_api pip $ARGS
-    docker compose exec "$INSTANCE_NAME"_api pip freeze > ../api/requirements.txt
+elif [ "$FIRST_ARG" == "poetry" ]; then
+    docker compose exec "$INSTANCE_NAME"_api poetry $ARGS
 elif [ "$FIRST_ARG" == "manage.py" ]; then
-    docker compose exec "$INSTANCE_NAME"_api python manage.py $ARGS
+    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py $ARGS
 elif [ "$FIRST_ARG" == "bserver" ]; then
-    docker compose exec "$INSTANCE_NAME"_api python manage.py runserver 0.0.0.0:4000
+    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py runserver 0.0.0.0:4000
 elif [ "$FIRST_ARG" == "up" ]; then
     docker_up
 elif [ "$FIRST_ARG" == "down" ]; then
@@ -68,16 +67,13 @@ elif [ "$FIRST_ARG" == "clean-db" ]; then
     rm -rf dbdata
     mkdir dbdata
     docker_up
-    docker compose exec "$INSTANCE_NAME"_api python manage.py migrate
-    docker compose exec "$INSTANCE_NAME"_api python manage.py cmd_account_seeding
-elif [ "$FIRST_ARG" == "api-upgrade" ]; then
-    docker compose exec "$INSTANCE_NAME"_api pip-review --local --interactive
-    docker compose exec "$INSTANCE_NAME"_api pip freeze > ../api/requirements.txt
+    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py migrate
+    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py cmd_account_seeding
 elif [ "$FIRST_ARG" == "btest" ]; then
     if [[ $1 ]]; then
-        docker compose exec "$INSTANCE_NAME"_api python manage.py test $1
+        docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py test $1
     else
-        docker compose exec "$INSTANCE_NAME"_api python manage.py test
+        docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py test
     fi
 else
     echo "Invalid argument, please use following arguments:"

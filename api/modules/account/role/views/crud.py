@@ -11,13 +11,10 @@ from services.drf_classes.custom_pagination import NoPaginationStatic
 from services.helpers.res_utils import ResUtils
 
 from ..helpers.srs import RoleSr
-from ..helpers.model_utils import RoleModelUtils
+from ..helpers.utils import RoleUtils
 
 
 class RoleViewSet(GenericViewSet):
-    def __init__(self, *args, **kwargs):
-        self.model_utils = RoleModelUtils()
-
     _name = "role"
     serializer_class = RoleSr
     permission_classes = (CustomPermission,)
@@ -30,7 +27,7 @@ class RoleViewSet(GenericViewSet):
         serializer = RoleSr(queryset, many=True)
         result = {
             "items": serializer.data,
-            "extra": {"permissions": self.model_utils.all_permissions()},
+            "extra": {"permissions": RoleUtils.all_permissions()},
         }
         return NoPaginationStatic.get_paginated_response(result)
 

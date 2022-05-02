@@ -40,11 +40,9 @@ export default class FormUtils {
         return new Promise((resolve, reject) => {
             RequestUtils.apiCall(url, payload, method)
                 .then((resp) => {
-                    console.log(resp);
                     resolve(resp.data);
                 })
                 .catch((err) => {
-                    console.log(err);
                     reject(err.response.data);
                 })
                 .finally(() => Utils.toggleGlobalLoading(false));

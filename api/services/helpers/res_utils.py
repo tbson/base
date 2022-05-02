@@ -1,18 +1,45 @@
-from typing import List
 from django.db import models
 from django.http import HttpResponse
-from django.contrib.auth.models import Permission, update_last_login
+from django.contrib.auth.models import Permission
 from django.utils.translation import gettext_lazy as _
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.serializers import ValidationError
 from services.helpers.token_utils import TokenUtils
+from services.helpers.utils import Utils
 
 
 class ResUtils:
     @staticmethod
-    def get_visible_menus(groups: List[models.QuerySet]) -> List[str]:
-        result: List = []
+    def jwt_response_handler(token, refresh_token, user):
+        error_message = _("This user didn't associate with any profile.")
+        try:
+            data = {
+                "token": token,
+                "refresh_token": refresh_token,
+                "user_type": "staff" if hasattr(user, "staff") else "",
+            }
+
+            if not data["user_type"]:
+                raise ValidationError({"detail": error_message})
+
+            user.refresh_token_signature = TokenUtils.get_token_signature(refresh_token)
+            user.last_login = Utils.now()
+            user.save()
+
+            if user.is_staff:
+                data["visible_menus"] = ResUtils.get_all_menus()
+            else:
+                data["visible_menus"] = ResUtils.get_visible_menus(user.groups.all())
+
+            return data
+        except Exception as e:
+            print(repr(e))
+            raise ValidationError({"detail": error_message})
+
+    @staticmethod
+    def get_visible_menus(groups: list[models.QuerySet]) -> list[str]:
+        result = []
         for group in groups:
             permissions = group.permissions.filter(codename__startswith="view_")
             for pem in permissions:
@@ -25,8 +52,8 @@ class ResUtils:
         return result
 
     @staticmethod
-    def get_all_menus() -> List[str]:
-        result: List = []
+    def get_all_menus() -> list[str]:
+        result = []
         permissions = Permission.objects.all()
         for pem in permissions:
             codename_arr = pem.codename.split("_")
@@ -36,44 +63,6 @@ class ResUtils:
             if menu not in result:
                 result.append(menu)
         return result
-
-    @staticmethod
-    def jwt_response_handler(token, user=None, request=None):
-        from modules.account.staff.helpers.srs import (
-            StaffRetrieveSr,
-        )  # Handle circular import
-
-        try:
-            data = {}
-
-            staff = user.staff
-            token_context = TokenUtils.get_token_context(request)
-            token_signature = TokenUtils.get_token_signature(token)
-
-            TokenUtils.update_token_meta_data(staff, token_context, token_signature)
-
-            data = StaffRetrieveSr(staff).data
-
-            staff.save()
-            update_last_login(None, staff.user)
-            if user.is_staff:
-                data["visible_menus"] = ResUtils.get_all_menus()
-            else:
-                data["visible_menus"] = ResUtils.get_visible_menus(user.groups.all())
-            data["token"] = token
-
-            return data
-        except Exception as e:
-            print(repr(e))
-            error_message = _("This user didn't associate with any profile.")
-            raise ValidationError({"detail": error_message})
-
-    @staticmethod
-    def get_token(headers):
-        result = headers.get("Authorization", None)
-        if result:
-            return result.split(" ")[1]
-        return ""
 
     @staticmethod
     def error_format(data):

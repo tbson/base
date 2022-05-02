@@ -1,6 +1,5 @@
 from django.db.models import QuerySet
-from django.conf import settings
-from modules.noti.verif.helpers.model_utils import VerifModelUtils
+from modules.noti.verif.helpers.utils import VerifUtils
 
 
 class StaffSignals:
@@ -27,10 +26,7 @@ class StaffSignals:
 class StaffSignalUtilss:
     @staticmethod
     def email_notification_after_creating(staff: QuerySet):
-        if settings.STAFF_NO_EMAIL_FIX_PASSWORD:
-            return
         subject = "Tạo tài khoản thành công"
-        to_email = staff.email
+        to_email = staff.user.email
 
-        verif_model_utils = VerifModelUtils()
-        verif_model_utils.send_noti_after_creating_email(subject, to_email)
+        VerifUtils.send_noti_after_creating_email(subject, to_email)

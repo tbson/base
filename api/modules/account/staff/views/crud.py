@@ -8,8 +8,7 @@ from services.drf_classes.custom_permission import CustomPermission
 
 from services.helpers.res_utils import ResUtils
 from ..models import Staff
-from ..helpers.srs import StaffSr, StaffRetrieveSr
-from ..helpers.model_utils import StaffModelUtils
+from ..helpers.srs import StaffSr
 
 
 class StaffViewSet(GenericViewSet):
@@ -19,27 +18,21 @@ class StaffViewSet(GenericViewSet):
     serializer_class = StaffSr
     search_fields = ["email", "phone_number", "first_name", "last_name"]
 
-    def __init__(self, *args, **kwargs):
-        self.mu = StaffModelUtils()
-
     def list(self, request):
         queryset = Staff.objects.all()
         queryset = self.filter_queryset(queryset)
         queryset = self.paginate_queryset(queryset)
-        serializer = StaffRetrieveSr(queryset, many=True)
+        serializer = StaffSr(queryset, many=True)
 
         result = {
             "items": serializer.data,
-            "extra": {
-                "list_group": self.mu.get_list_group(),
-            },
         }
 
         return self.get_paginated_response(result)
 
     def retrieve(self, request, pk=None):
         obj = get_object_or_404(Staff, pk=pk)
-        serializer = StaffRetrieveSr(obj)
+        serializer = StaffSr(obj)
         return ResUtils.res(serializer.data)
 
     @action(methods=["post"], detail=True)

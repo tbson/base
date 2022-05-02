@@ -22,7 +22,7 @@ export default class NavUtils {
     static logout(navigate) {
         return () => {
             const baseUrl = RequestUtils.getApiBaseUrl();
-            const logoutUrl = `${baseUrl}account/staff/logout/`;
+            const logoutUrl = `${baseUrl}account/user/logout/`;
             Utils.toggleGlobalLoading();
             const payload = {
                 firebase_token: "",

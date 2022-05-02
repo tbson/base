@@ -12,5 +12,4 @@ def vars(request):
         "STATIC_URL": settings.STATIC_URL,
         "STATIC_IMG_URL": settings.STATIC_IMG_URL,
         "MEDIA_URL": settings.MEDIA_URL,
-        "DEFAULT_META": settings.DEFAULT_META,
     }

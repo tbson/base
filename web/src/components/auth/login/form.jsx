@@ -7,7 +7,10 @@ const formName = "LoginForm";
 
 export default function LoginForm({ onChange, children }) {
     const [form] = Form.useForm();
-    const initialValues = { username: "tbson87@gmail.com", password: "123456" };
+    const initialValues = {
+        username: "admin@localhost",
+        password: "SamplePassword123!@#"
+    };
 
     const formAttrs = {
         username: {

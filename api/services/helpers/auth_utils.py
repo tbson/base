@@ -1,7 +1,10 @@
 from django.db.models import QuerySet
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password, check_password
-from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
-from rest_framework_jwt.settings import api_settings
+from rest_framework_simplejwt.serializers import TokenVerifySerializer
+from rest_framework_simplejwt.settings import api_settings
+
+User = get_user_model()
 
 
 class AuthUtils:
@@ -9,7 +12,7 @@ class AuthUtils:
     def user_from_token(token):
         try:
             token = {"token": token}
-            data = VerifyJSONWebTokenSerializer().validate(token)
+            data = TokenVerifySerializer().validate(token)
             return data["user"]
         except Exception:
             return None
@@ -29,3 +32,11 @@ class AuthUtils:
     @staticmethod
     def check_password(raw_password, hash_password):
         return check_password(raw_password, hash_password)
+
+    @staticmethod
+    def is_authenticated(username, password):
+        try:
+            user = User.objects.get(username=username)
+            return AuthUtils.check_password(password, user.password)
+        except User.DoesNotExist:
+            return False

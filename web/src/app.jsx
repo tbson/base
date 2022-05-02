@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RecoilRoot } from "recoil";
-import { Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import PrivateRoute from "services/components/route/private_route.jsx";
 import NotMatch from "services/components/route/not_match";
 import ScrollToTop from "services/components/scroll_to_top";
@@ -29,7 +29,7 @@ function App() {
     return (
         <RecoilRoot>
             <Spinner />
-            <HashRouter>
+            <BrowserRouter>
                 <ScrollToTop />
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -41,7 +41,7 @@ function App() {
                     </Route>
                     <Route path="*" element={<NotMatch />} />
                 </Routes>
-            </HashRouter>
+            </BrowserRouter>
         </RecoilRoot>
     );
 }

@@ -1,5 +1,4 @@
 import { LOCAL_STORAGE_PREFIX } from "src/consts";
-import Utils from "services/helpers/utils";
 
 export default class StorageUtils {
     /**
@@ -81,8 +80,27 @@ export default class StorageUtils {
      */
     static getToken() {
         const authObj = this.getStorageObj("auth");
-        const token = authObj.token;
-        return token ? token : "";
+        return authObj.token || "";
+    }
+
+    /**
+     * getRefreshToken.
+     *
+     * @returns {string}
+     */
+    static getRefreshToken() {
+        const authObj = this.getStorageObj("auth");
+        return authObj.refresh_token || "";
+    }
+
+    /**
+     * getUserType.
+     *
+     * @returns {string}
+     */
+    static getUserType() {
+        const authObj = this.getStorageObj("auth");
+        return authObj.user_type || "";
     }
 
     /**

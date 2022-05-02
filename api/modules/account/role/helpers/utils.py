@@ -3,10 +3,9 @@ from django.contrib.auth.models import Permission
 from services.helpers.utils import Utils
 
 
-class RoleModelUtils:
-    def seeding(
-        self, index: int, single: bool = False, save: bool = True
-    ) -> models.QuerySet:
+class RoleUtils:
+    @staticmethod
+    def seeding(index: int, single: bool = False, save: bool = True) -> models.QuerySet:
         from .srs import RoleSr
 
         if index == 0:
@@ -29,8 +28,8 @@ class RoleModelUtils:
 
         return get_data(index) if single is True else get_list_data(index)
 
-    def all_permissions(self) -> dict:
-        result: list = []
+    @staticmethod
+    def all_permissions() -> dict:
         permissions = Permission.objects.exclude(
             content_type__model__in=[
                 "logentry",
@@ -48,13 +47,13 @@ class RoleModelUtils:
                 "quotavaluelog",
             ]
         ).order_by("content_type__model")
-        for pem in permissions:
-            result.append(
-                Utils.get_transfer_data_source(pem.pk, pem.content_type.model, pem.name)
-            )
-        return result
+        return [
+            Utils.get_transfer_data_source(pem.pk, pem.content_type.model, pem.name)
+            for pem in permissions
+        ]
 
-    def group_content_type(self, permissions: list) -> dict:
+    @staticmethod
+    def group_content_type(permissions: list) -> dict:
         result: dict = {}
         for pem in permissions:
             short_pem = {
