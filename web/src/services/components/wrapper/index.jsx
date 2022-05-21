@@ -125,6 +125,9 @@ export default function Wrapper({ children }) {
                             <LocaleSelect />
                             <span
                                 onClick={logout}
+                                onKeyDown={() => {}}
+                                onKeyUp={() => {}}
+                                onKeyPress={() => {}}
                                 className="pointer"
                                 role="button"
                                 tabIndex="0"
