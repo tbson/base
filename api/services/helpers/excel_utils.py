@@ -30,6 +30,7 @@ class ExcelUtils:
 
         return inner
 
+    @staticmethod
     def colnum_string(n):
         string = ""
         while n > 0:

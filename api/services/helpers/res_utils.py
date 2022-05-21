@@ -88,9 +88,9 @@ class ResUtils:
     def error_response_to_string(error_response: dict) -> list:
         result = []
         for _status, value in error_response.items():
-            if isinstance(value, str) is True and value:
+            if isinstance(value, str) and value:
                 result.append(value)
-            if isinstance(value, list) is True and value:
+            if isinstance(value, list) and value:
                 result += value
         return result
 

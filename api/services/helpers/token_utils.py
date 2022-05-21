@@ -10,7 +10,7 @@ User = get_user_model()
 class TokenUtils:
     @staticmethod
     def get_token_from_headers(headers: dict, is_jwt=True):
-        prefix = "bearer " if not is_jwt else "JWT "
+        prefix = "JWT " if is_jwt else "bearer "
         full_token = headers.get("Authorization")
         if not full_token:
             return ""

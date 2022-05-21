@@ -5,6 +5,7 @@ import sys
 import json
 import uuid
 import asyncio
+import contextlib
 import random
 import math
 import itertools
@@ -68,28 +69,28 @@ class Utils:
     def return_exception(e):
         exc_tb = sys.exc_info()[2]
         file_name = exc_tb.tb_frame.f_code.co_filename
-        return str(e) + " => " + file_name + ":" + str(exc_tb.tb_lineno)
+        return f"{str(e)} => {file_name}:{str(exc_tb.tb_lineno)}"
 
     @staticmethod
-    def string_to_bool(input: str) -> bool:
-        input = input.lower().strip()
-        return bool(input and input != "false" and input != "0")
+    def string_to_bool(input_str: str) -> bool:
+        input_str = input_str.lower().strip()
+        return bool(input_str and input_str != "false" and input_str != "0")
 
     @staticmethod
-    def string_to_int(input: str, default: int = 0) -> int:
-        if isinstance(input, str):
-            input = input.lower().strip()
+    def string_to_int(input_str: str, default: int = 0) -> int:
+        if isinstance(input_str, str):
+            input_str = input_str.lower().strip()
         try:
-            return int(input)
+            return int(input_str)
         except ValueError:
             return default
 
     @staticmethod
-    def string_to_float(input: str, default: float = 0.0) -> float:
-        if isinstance(input, str):
-            input = input.lower().strip()
+    def string_to_float(input_str: str, default: float = 0.0) -> float:
+        if isinstance(input_str, str):
+            input_str = input_str.lower().strip()
         try:
-            return float(input)
+            return float(input_str)
         except ValueError:
             return default
 
@@ -140,11 +141,9 @@ class Utils:
     def str_to_datetime(date_str: str, aware=False):
         format_str = settings.STANDARD_DATETIME_FORMAT
         result = None
-        try:
+        with contextlib.suppress(Exception):
             date_str = Utils.format_datetime_str(date_str)
             result = datetime.strptime(date_str, format_str)
-        except Exception:
-            pass
         if not aware:
             return result
         return Utils.make_datetime_aware(result)
@@ -190,9 +189,12 @@ class Utils:
     @staticmethod
     def date_to_readable_str(date_obj, only_date=False) -> str:
         if isinstance(date_obj, datetime):
-            if not only_date:
-                return date_obj.strftime(settings.READABLE_DATETIME_FORMAT)
-            return date_obj.strftime(settings.READABLE_DATE_FORMAT)
+            return (
+                date_obj.strftime(settings.READABLE_DATE_FORMAT)
+                if only_date
+                else date_obj.strftime(settings.READABLE_DATETIME_FORMAT)
+            )
+
         if isinstance(date_obj, date):
             return date_obj.strftime(settings.READABLE_DATE_FORMAT)
         return ""
@@ -200,7 +202,7 @@ class Utils:
     @staticmethod
     def scale_image(ratio, path, scale_only=False):
         max_width = settings.IMAGE_MAX_WIDTH
-        try:
+        with contextlib.suppress(Exception):
             image = Image.open(path)
             (original_width, original_height) = image.size
             width = max_width
@@ -211,7 +213,7 @@ class Utils:
             height_factor = height / original_height
 
             factor = width_factor
-            if height_factor > width_factor:
+            if height_factor > factor:
                 factor = height_factor
 
             size = (int(original_width * factor), int(original_height * factor))
@@ -230,18 +232,14 @@ class Utils:
                 img_height = height + (original_height - height) / 2
                 image = image.crop((img_x, img_y, img_width, img_height))
                 image.save(path, "JPEG")
-        except Exception:
-            pass
 
     @staticmethod
     def create_thumbnail(width, path):
-        try:
+        with contextlib.suppress(Exception):
             size = (width, width)
             image = Image.open(path)
             image.thumbnail(size, Image.ANTIALIAS)
             image.save(Utils.get_thumbnail(path), "JPEG")
-        except Exception:
-            pass
 
     @staticmethod
     def remove_file(path, remove_thumbnail=False):
@@ -333,7 +331,7 @@ class Utils:
 
     @staticmethod
     def obj_from_pk(model, pk):
-        pk = None if not pk else pk
+        pk = pk or None
         blank = not pk
         try:
             obj = model.objects.get(pk=pk)
@@ -388,7 +386,7 @@ class Utils:
     def get_str_day_month(input_date: date) -> str:
         date_dd = Utils.get_str_day(input_date)
         date_m = Utils.get_str_month(input_date)
-        return "{}{}".format(date_dd, date_m)
+        return f"{date_dd}{date_m}"
 
     @staticmethod
     def get_next_uid_index(uid: str) -> int:
@@ -429,10 +427,8 @@ class Utils:
     @staticmethod
     def write_file(file: InMemoryUploadedFile, folder: str):
         ext = file.name.split(".")[-1]
-        filename = "{}.{}".format(Utils.get_uuid(), ext)
-        return default_storage.save(
-            "{}/{}".format(folder, filename), ContentFile(file.read())
-        )
+        filename = f"{Utils.get_uuid()}.{ext}"
+        return default_storage.save(f"{folder}/{filename}", ContentFile(file.read()))
         # return os.path.join(settings.MEDIA_ROOT, path)
 
     @staticmethod
@@ -446,17 +442,15 @@ class Utils:
     @staticmethod
     def get_random_number(string_length=6) -> str:
         letters = "0123456789"
-        return "".join(random.choice(letters) for i in range(string_length))
+        return "".join(random.choice(letters) for _ in range(string_length))
 
     @staticmethod
     def convert_list_to_string(value):
-        if isinstance(value, list) is True:
-            return ", ".join(value)
-        return value
+        return ", ".join(value) if isinstance(value, list) else value
 
     @staticmethod
     def convert_string_to_list(str_value):
-        if isinstance(str_value, str) is True:
+        if isinstance(str_value, str):
             return [value.strip() for value in str_value.split(",")]
         return []
 
@@ -466,7 +460,7 @@ class Utils:
             return ""
         prefix = phone_number[:3]
         if prefix == "+84":
-            return "0" + phone_number[3:]
+            return f"0{phone_number[3:]}"
         return phone_number
 
     @staticmethod
@@ -478,11 +472,11 @@ class Utils:
 
         prefix = phone_number[:4]
         if prefix == "+840":
-            return "+84" + phone_number[4:]
+            return f"+84{phone_number[4:]}"
 
         prefix = phone_number[:1]
         if prefix == "0":
-            return "+84" + phone_number[1:]
+            return f"+84{phone_number[1:]}"
 
         return phone_number
 
@@ -536,7 +530,7 @@ class Utils:
 
     @staticmethod
     def digit_to_bool(in_history: str) -> bool:
-        in_history = str(in_history)
+        in_history = in_history
         if not in_history:
             return False
         if in_history in {"0", "1"}:
@@ -580,7 +574,7 @@ class Utils:
     def mask_prefix(input: str, mask_length=4) -> str:
         remain = input[-mask_length:]
         prefix = "*" * (len(input) - mask_length)
-        return "{}{}".format(prefix, remain)
+        return f"{prefix}{remain}"
 
     @staticmethod
     def mask_email(email: str) -> str:
@@ -590,12 +584,12 @@ class Utils:
         length = len(name)
 
         if length == 1:
-            return "*@{}".format(suffix)
+            return f"*@{suffix}"
 
         mask_length = math.ceil(length / 2) if length <= 4 else 4
         name = Utils.mask_prefix(name, mask_length)
 
-        return "{}@{}".format(name, suffix)
+        return f"{name}@{suffix}"
 
     @staticmethod
     def mask_username(username):
@@ -614,9 +608,11 @@ class Utils:
 
     @staticmethod
     def is_boolean_dict(input: list) -> bool:
-        if not input.values():
-            return False
-        return all(isinstance(item, bool) for item in input.values())
+        return (
+            all(isinstance(item, bool) for item in input.values())
+            if input.values()
+            else False
+        )
 
     @staticmethod
     def ensure_space_slash(input: str) -> str:
@@ -624,7 +620,7 @@ class Utils:
 
     @staticmethod
     def get_tuple_value(input_tuple, key, default_value=None):
-        result_dict = {x: y for x, y in input_tuple}
+        result_dict = dict(input_tuple)
         return result_dict.get(key, default_value)
 
     @staticmethod

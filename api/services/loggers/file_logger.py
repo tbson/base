@@ -1,3 +1,4 @@
+import contextlib
 import logging
 import inspect
 from django.conf import settings
@@ -7,11 +8,9 @@ class FileLogger:
     @staticmethod
     def get_user(stack):
         if "/views/" in stack.filename:
-            try:
+            with contextlib.suppress(Exception):
                 request = stack[0].f_locals["request"]
                 return request.user
-            except Exception:
-                pass
         return None
 
     @staticmethod
