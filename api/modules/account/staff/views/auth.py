@@ -11,17 +11,16 @@ class ProfileView(APIView):
     def get_user(self):
         return self.request.user
 
-    def get(self, request, format=None):
+    def get(self, request):
         staff = self.get_user().staff
         data = StaffSr(staff).data
         return ResUtils.res(data)
 
-    def put(self, request, format=None):
+    def put(self, request):
         user = self.get_user()
         staff = user.staff
         data = {}
-        phone_number = request.data.get("phone_number", None)
-        if phone_number:
+        if phone_number := request.data.get("phone_number", None):
             data = dict(phone_number=Utils.phone_to_canonical_format(phone_number))
         serializer = StaffSr(staff, partial=True, data=data)
         serializer.is_valid(raise_exception=True)
