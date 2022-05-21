@@ -131,11 +131,11 @@ class Utils:
         return start_date + timedelta(**params)
 
     @staticmethod
-    def make_aware(input: datetime) -> datetime:
-        if not input:
-            return input
+    def make_aware(input_datetime: datetime) -> datetime:
+        if not input_datetime:
+            return input_datetime
         tz = pytz.timezone(settings.TIME_ZONE)
-        return tz.localize(input)
+        return tz.localize(input_datetime)
 
     @staticmethod
     def str_to_datetime(date_str: str, aware=False):
@@ -411,15 +411,15 @@ class Utils:
         return not child.isdisjoint(parent) and not child.issubset(parent)
 
     @staticmethod
-    def remove_special_chars(input: str, upper: bool = False) -> str:
-        result = slugify(input).replace("-", "").strip()
+    def remove_special_chars(input_str: str, upper: bool = False) -> str:
+        result = slugify(input_str).replace("-", "").strip()
         if upper:
             return result.upper()
         return result
 
     @staticmethod
-    def str_to_uid(input: str, upper: bool = False) -> str:
-        result = slugify(input).replace("-", "_").strip()
+    def str_to_uid(input_str: str, upper: bool = False) -> str:
+        result = slugify(input_str).replace("-", "_").strip()
         if upper:
             return result.upper()
         return result
@@ -538,12 +538,12 @@ class Utils:
         return False
 
     @staticmethod
-    def date_str_strip_millisecs(date_input: str) -> str:
+    def date_str_strip_millisecs(input_str: str) -> str:
         # 2020-02-27T12:15:01.623+07:00
-        if not isinstance(date_input, str):
+        if not isinstance(input_str, str):
             return None
-        if date_input.find(".") == 19 and date_input.find("+") == 23:
-            date_arr = date_input.split(".")
+        if input_str.find(".") == 19 and input_str.find("+") == 23:
+            date_arr = input_str.split(".")
             first_part = date_arr[0]
             second_part = date_arr[1][3:]
             return first_part + second_part
@@ -571,9 +571,9 @@ class Utils:
         return False
 
     @staticmethod
-    def mask_prefix(input: str, mask_length=4) -> str:
-        remain = input[-mask_length:]
-        prefix = "*" * (len(input) - mask_length)
+    def mask_prefix(input_str: str, mask_length=4) -> str:
+        remain = input_str[-mask_length:]
+        prefix = "*" * (len(input_str) - mask_length)
         return f"{prefix}{remain}"
 
     @staticmethod
@@ -607,16 +607,16 @@ class Utils:
         return [value for value in lst1 if value in lst2]
 
     @staticmethod
-    def is_boolean_dict(input: list) -> bool:
+    def is_boolean_dict(input_list: list) -> bool:
         return (
-            all(isinstance(item, bool) for item in input.values())
-            if input.values()
+            all(isinstance(item, bool) for item in input_list.values())
+            if input_list.values()
             else False
         )
 
     @staticmethod
-    def ensure_space_slash(input: str) -> str:
-        return input.replace("/", " / ").replace("  ", " ")
+    def ensure_space_slash(input_str: str) -> str:
+        return input_str.replace("/", " / ").replace("  ", " ")
 
     @staticmethod
     def get_tuple_value(input_tuple, key, default_value=None):
@@ -633,9 +633,9 @@ class Utils:
         return json.loads(JSONRenderer().render(sr_data))
 
     @staticmethod
-    def show_diff_in_secs(time_input) -> float:
+    def show_diff_in_secs(input_time) -> float:
         def inner(label: str):
-            diff = (Utils.now() - time_input).total_seconds()
+            diff = (Utils.now() - input_time).total_seconds()
             print(f"[+] {label} - {diff} secs")
 
         return inner
