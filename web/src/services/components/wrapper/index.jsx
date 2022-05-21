@@ -123,7 +123,7 @@ export default function Wrapper({ children }) {
                         </Col>
                         <Col span={12} className="right" style={{ paddingRight: 20 }}>
                             <LocaleSelect />
-                            <span onClick={logout} className="pointer">
+                            <span onClick={logout} className="pointer" role="button">
                                 <span>
                                     {StorageUtils.getStorageObj("auth").fullname}
                                 </span>
