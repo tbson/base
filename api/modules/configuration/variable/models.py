@@ -20,7 +20,7 @@ class Variable(models.Model):
     objects = VariableManager()
 
     def __str__(self):
-        return "{} = {}".format(self.uid, self.value)
+        return f"{self.uid} = {self.value}"
 
     class Meta:
         db_table = "variables"

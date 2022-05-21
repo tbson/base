@@ -28,7 +28,7 @@ export default class StorageUtils {
     static setStorageObj(input) {
         for (const key in input) {
             const value = input[key];
-            this.setStorage(key, value);
+            StorageUtils.setStorage(key, value);
         }
     }
 
@@ -79,8 +79,20 @@ export default class StorageUtils {
      * @returns {string}
      */
     static getToken() {
-        const authObj = this.getStorageObj("auth");
+        const authObj = StorageUtils.getStorageObj("auth");
         return authObj.token || "";
+    }
+
+    /**
+     * setToken.
+     *
+     * @param {string} token
+     * @returns {void}
+     */
+    static setToken(token) {
+        const authData = StorageUtils.getStorageObj("auth");
+        authData["token"] = token;
+        StorageUtils.setStorage("auth", authData);
     }
 
     /**
@@ -89,7 +101,7 @@ export default class StorageUtils {
      * @returns {string}
      */
     static getRefreshToken() {
-        const authObj = this.getStorageObj("auth");
+        const authObj = StorageUtils.getStorageObj("auth");
         return authObj.refresh_token || "";
     }
 
@@ -99,7 +111,7 @@ export default class StorageUtils {
      * @returns {string}
      */
     static getUserType() {
-        const authObj = this.getStorageObj("auth");
+        const authObj = StorageUtils.getStorageObj("auth");
         return authObj.user_type || "";
     }
 
@@ -109,7 +121,7 @@ export default class StorageUtils {
      * @returns {number}
      */
     static getAuthId() {
-        const authObj = this.getStorageObj("auth");
+        const authObj = StorageUtils.getStorageObj("auth");
         return authObj.id;
     }
 

@@ -17,4 +17,5 @@ class StripJWT:
 
             with contextlib.suppress(AttributeError):
                 if AllowAny in view_func.view_class.permission_classes and token:
+                    # request.META.pop("HTTP_AUTHORIZATION", None)
                     request.META["HTTP_AUTHORIZATION"] = bearer_token

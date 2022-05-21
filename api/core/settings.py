@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 import os
 import sys
 from pathlib import Path
+from datetime import timedelta
 from django.utils.log import DEFAULT_LOGGING
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG") == "true")
+DEBUG = os.environ.get("DEBUG") == "true"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -58,6 +60,7 @@ PROJECT_APPS = [
 INSTALLED_APPS = REQUIRED_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    "services.middleware.strip_jwt.StripJWT",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -115,7 +118,7 @@ EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 0))
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = bool(os.environ.get("EMAIL_USE_TLS") == "true")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS") == "true"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -208,6 +211,9 @@ for log_type in LOG_TYPES:
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "UPDATE_LAST_LOGIN": True,
 }
 
 REST_FRAMEWORK = {
@@ -229,7 +235,7 @@ REST_FRAMEWORK = {
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 COMMAND_MODE = len(sys.argv) > 1 and sys.argv[1].startswith("cmd_")
-EMAIL_ENABLE = bool(os.environ.get("EMAIL_ENABLE") == "true")
+EMAIL_ENABLE = os.environ.get("EMAIL_ENABLE") == "true"
 
 PROTOCOL = os.environ.get("PROTOCOL")
 PORT = os.environ.get("PORT")
@@ -240,7 +246,7 @@ CSRF_TRUSTED_ORIGINS = [f"{PROTOCOL}://{DOMAIN}"]
 
 APP_TITLE = os.environ.get("APP_TITLE")
 APP_DESCRTIPTION = os.environ.get("APP_DESCRTIPTION")
-DEFAULT_FROM_EMAIL = '"{}"<{}>'.format(APP_TITLE, EMAIL_DOMAIN)
+DEFAULT_FROM_EMAIL = f'"{APP_TITLE}"<{EMAIL_DOMAIN}>'
 
 VERIFICATION_CODE_EXPIRED_PERIOD = 120  # seconds
 

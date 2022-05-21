@@ -104,16 +104,17 @@ export default class RequestUtils {
         try {
             return await RequestUtils.request(url, params, method, blobResponseType);
         } catch (err) {
-            console.log(err);
             if (err.response.status === 401) {
-                const refreshUrl = "accounts/user/refresh-token/";
-                const checkUrl = "accounts/user/refresh-check/";
+                const refreshUrl = "account/user/refresh-token/";
+                const checkUrl = "account/user/refresh-check/";
                 try {
-                    await RequestUtils.request(
+                    const refreshTokenResponse = await RequestUtils.request(
                         refreshUrl,
                         { refresh_token: StorageUtils.getRefreshToken() },
                         "POST"
                     );
+                    const token = refreshTokenResponse.data.token;
+                    StorageUtils.setToken(token);
 
                     try {
                         return await RequestUtils.request(url, params, method);
@@ -127,6 +128,7 @@ export default class RequestUtils {
                         return Promise.reject(err);
                     }
                 } catch (err) {
+                    console.log(err);
                     RequestUtils.request(checkUrl).catch(() => {
                         // Logout
                         NavUtils.cleanAndMoveToLoginPage();
