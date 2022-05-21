@@ -9,6 +9,7 @@ from services.drf_classes.custom_permission import CustomPermission
 
 from services.helpers.res_utils import ResUtils
 from ..models import Staff
+from ..helpers.utils import StaffUtils
 from ..helpers.srs import StaffSr
 
 
@@ -27,6 +28,11 @@ class StaffViewSet(GenericViewSet):
 
         result = {
             "items": serializer.data,
+            "extra": {
+                "options": {
+                    "group": StaffUtils.get_list_group(),
+                }
+            },
         }
 
         return self.get_paginated_response(result)

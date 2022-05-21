@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Divider, Button } from "antd";
+import { t } from "ttag";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
 import PageHeading from "components/common/page_heading";
 import RequestUtils from "services/helpers/request_utils";
@@ -40,7 +41,7 @@ export default function Profile() {
                     icon={<UserOutlined />}
                     onClick={() => UpdateProfile.toggle(true, profileData)}
                 >
-                    Cập nhật hồ sơ
+                    {t`Update profile`}
                 </Button>
                 &nbsp;&nbsp;
                 <Button
@@ -48,7 +49,7 @@ export default function Profile() {
                     icon={<KeyOutlined />}
                     onClick={() => ChangePwd.toggle()}
                 >
-                    Đổi mật khẩu
+                    {t`Change password`}
                 </Button>
                 <UpdateProfile onChange={(data) => setProfileData(data)} />
                 <ChangePwd />

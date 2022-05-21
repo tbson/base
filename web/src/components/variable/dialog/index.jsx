@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { t } from "ttag";
 import { Modal } from "antd";
 import Utils from "services/helpers/utils";
 import RequestUtils from "services/helpers/request_utils";
 import Form from "./form";
-import { urls, emptyRecord, messages } from "../config";
+import { urls, messages } from "../config";
 
 export class Service {
     static get toggleEvent() {
@@ -23,7 +24,7 @@ export class Service {
  * @param {function} props.onChange - (data: Dict, id: number) => void
  */
 export default function VariableDialog({ onChange }) {
-    const [data, setData] = useState({ ...emptyRecord });
+    const [data, setData] = useState({});
     const [open, setOpen] = useState(false);
     const [id, setId] = useState(0);
 
@@ -39,7 +40,7 @@ export default function VariableDialog({ onChange }) {
                 })
                 .finally(() => Utils.toggleGlobalLoading(false));
         } else {
-            setData({ ...emptyRecord });
+            setData({});
             setOpen(true);
         }
     };
@@ -58,9 +59,9 @@ export default function VariableDialog({ onChange }) {
             destroyOnClose
             visible={open}
             okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
-            okText="OK"
+            okText={t`Save`}
             onCancel={() => Service.toggle(false)}
-            cancelText="Thoát"
+            cancelText={t`Cancel`}
             title={Utils.getDialogTitle(id, messages)}
         >
             <Form

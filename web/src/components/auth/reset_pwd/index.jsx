@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
+import { t } from "ttag";
 import { Modal } from "antd";
 import Utils from "services/helpers/utils";
 import Form from "./form";
@@ -47,9 +48,9 @@ export default function ResetPwd({ onChange }) {
             visible={open}
             okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
             onCancel={() => Service.toggle(false)}
-            okText="OK"
-            cancelText="Thoát"
-            title="Khôi phục mật khẩu"
+            okText={t`Reset password`}
+            cancelText={t`Cancel`}
+            title={t`Reset password`}
         >
             <Form
                 onChange={(verif_id, username) => {

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { t } from "ttag";
 import { Modal } from "antd";
 import Utils from "services/helpers/utils";
 import Form from "./form";
@@ -38,10 +39,10 @@ export default function UpdateProfile({ onChange }) {
             destroyOnClose
             visible={open}
             okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
-            okText="OK"
+            okText={t`Update profile`}
             onCancel={() => Service.toggle(false)}
-            cancelText="Thoát"
-            title="Cập nhật tài khoản"
+            cancelText={t`Cancel`}
+            title={t`Update profile`}
         >
             <Form
                 data={data}

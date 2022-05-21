@@ -2,9 +2,14 @@ import * as React from "react";
 import { Form, Input } from "antd";
 import Utils from "services/helpers/utils";
 import FormUtils from "services/helpers/form_utils";
-import { urls, labels, emptyRecord } from "../config";
+import { urls, labels } from "../config";
 
 const formName = "VariableForm";
+const emptyRecord = {
+    id: 0,
+    uid: "",
+    value: ""
+};
 
 /**
  * @callback FormCallback

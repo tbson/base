@@ -1,4 +1,5 @@
 import * as React from "react";
+import { t } from "ttag";
 import { Form, Input } from "antd";
 import FormUtils from "services/helpers/form_utils";
 import { urls } from "../../config";
@@ -11,7 +12,7 @@ export default function UpdateProfileForm({ data, onChange }) {
     const formAttrs = {
         phone_number: {
             name: "phone_number",
-            label: "Số điện thoại",
+            label: t`Phone number`,
             rules: [FormUtils.ruleRequired()]
         }
     };

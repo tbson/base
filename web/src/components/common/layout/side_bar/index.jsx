@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate, useLocation, NavLink, Outlet } from "react-router-dom";
+import { t } from "ttag";
 import { Layout, Menu, Row, Col } from "antd";
 import {
     MenuUnfoldOutlined,
@@ -71,7 +72,7 @@ export default function SideBarLayout() {
                     <Menu.Item key="/">
                         <NavLink to="/">
                             <UserOutlined />
-                            <MenuLabel collapsed={collapsed} label="Hồ sơ" />
+                            <MenuLabel collapsed={collapsed} label={t`Profile`} />
                         </NavLink>
                     </Menu.Item>
 
@@ -79,19 +80,16 @@ export default function SideBarLayout() {
                         <Menu.Item key="/variable">
                             <NavLink to="/variable">
                                 <SettingFilled />
-                                <MenuLabel collapsed={collapsed} label="Cấu hình" />
+                                <MenuLabel collapsed={collapsed} label={t`Config`} />
                             </NavLink>
                         </Menu.Item>
                     )}
-                    <SubMenu key="company" icon={<GoldenFilled />} title="Công ty">
+                    <SubMenu key="company" icon={<GoldenFilled />} title={t`Company`}>
                         {visibleMenus.includes("staff") && (
                             <Menu.Item key="/staff">
                                 <NavLink to="/staff">
                                     <TeamOutlined />
-                                    <MenuLabel
-                                        collapsed={collapsed}
-                                        label="Nhân viên"
-                                    />
+                                    <MenuLabel collapsed={collapsed} label={t`Staff`} />
                                 </NavLink>
                             </Menu.Item>
                         )}
@@ -99,7 +97,7 @@ export default function SideBarLayout() {
                             <Menu.Item key="/role">
                                 <NavLink to="/role">
                                     <UsergroupAddOutlined />
-                                    <MenuLabel collapsed={collapsed} label="Nhóm" />
+                                    <MenuLabel collapsed={collapsed} label={t`Group`} />
                                 </NavLink>
                             </Menu.Item>
                         )}

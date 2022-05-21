@@ -1,4 +1,5 @@
 import * as React from "react";
+import { t } from "ttag";
 import { useSetRecoilState } from "recoil";
 import { Form, Input } from "antd";
 import FormUtils from "services/helpers/form_utils";
@@ -22,7 +23,7 @@ export default function ResetPwdForm({ onChange }) {
     const formAttrs = {
         username: {
             name: "username",
-            label: "Địa chỉ email",
+            label: t`Email`,
             rules: [FormUtils.ruleRequired()]
         }
     };

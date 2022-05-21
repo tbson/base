@@ -1,3 +1,4 @@
+import { t } from "ttag";
 import RequestUtils from "services/helpers/request_utils";
 
 const urlMap = {
@@ -10,20 +11,15 @@ const urlMap = {
 };
 export const urls = RequestUtils.prefixMapValues(urlMap.base);
 
-const headingTxt = "Cấu hình";
+const headingTxt = t`Config`;
+const name = headingTxt.toLowerCase();
 export const messages = {
     heading: headingTxt,
-    deleteOne: `Bạn có muốn xoá ${headingTxt.toLowerCase()} này?`,
-    deleteMultiple: `Bạn có muốn xoá những ${headingTxt.toLowerCase()} này?`
-};
-
-export const emptyRecord = {
-    id: 0,
-    uid: "",
-    value: ""
+    deleteOne: t`Do you want to remote this ${name}?`,
+    deleteMultiple: t`Do you want to remote these ${name}?`
 };
 
 export const labels = {
-    uid: "Tên cấu hình",
-    value: "Giá trị"
+    uid: t`Config name`,
+    value: t`Config value`
 };

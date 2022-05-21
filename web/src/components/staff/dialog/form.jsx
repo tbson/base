@@ -6,7 +6,7 @@ import FormUtils from "services/helpers/form_utils";
 import SelectInput from "components/common/form/ant/input/select_input.jsx";
 import CheckInput from "components/common/form/ant/input/check_input.jsx";
 import { urls, labels, emptyRecord } from "../config";
-import { listGroupSt } from "../states";
+import { staffOptionsSt } from "../states";
 
 /**
  * @callback FormCallback
@@ -27,7 +27,7 @@ const formName = "StaffForm";
  */
 export default function StaffForm({ data, onChange }) {
     const [form] = Form.useForm();
-    const listGroup = useRecoilValue(listGroupSt);
+    const staffOptions = useRecoilValue(staffOptionsSt);
 
     const initialValues = Utils.isEmpty(data) ? emptyRecord : { ...data };
     const id = initialValues.id;
@@ -90,7 +90,7 @@ export default function StaffForm({ data, onChange }) {
                 <Input />
             </Form.Item>
             <Form.Item {...formAttrs.groups}>
-                <SelectInput options={listGroup} mode="multiple" />
+                <SelectInput options={staffOptions.group} mode="multiple" block />
             </Form.Item>
             <Form.Item {...formAttrs.is_active}>
                 <CheckInput />

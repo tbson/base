@@ -1,3 +1,4 @@
+import { t } from "ttag";
 import RequestUtils from "services/helpers/request_utils";
 
 const urlMap = {
@@ -11,11 +12,12 @@ const urlMap = {
 };
 export const urls = RequestUtils.prefixMapValues(urlMap.base);
 
-const headingTxt = "Nhân viên";
+const headingTxt = t`Staff`;
+const name = headingTxt.toLowerCase();
 export const messages = {
     heading: headingTxt,
-    deleteOne: `Bạn có muốn xoá ${headingTxt.toLowerCase()} này?`,
-    deleteMultiple: `Bạn có muốn xoá những ${headingTxt.toLowerCase()} này?`
+    deleteOne: t`Do you want to remote this ${name}?`,
+    deleteMultiple: t`Do you want to remote these ${name}?`
 };
 
 export const emptyRecord = {
@@ -28,9 +30,11 @@ export const emptyRecord = {
 };
 
 export const labels = {
-    full_name: "Họ và tên",
-    email: "Email",
-    phone_number: "Số điện thoại",
-    is_active: "Kích hoạt",
-    groups: "Nhóm"
+    full_name: t`Fullname`,
+    last_name: t`Lastname`,
+    first_name: t`Firstname`,
+    email: t`Email`,
+    phone_number: t`Phone number`,
+    is_active: t`Active`,
+    groups: t`Groups`
 };

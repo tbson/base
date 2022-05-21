@@ -1,4 +1,5 @@
 import axios from "axios";
+import { t } from "ttag";
 
 export const DATE_REABLE_FORMAT = "DD/MM/YYYY";
 export const DATE_ISO_FORMAT = "YYYY-MM-DD";
@@ -113,7 +114,7 @@ export default class Utils {
      * @returns {string}
      */
     static getDialogTitle(id, messages) {
-        const action = id ? "Sửa" : "Thêm";
+        const action = id ? t`Update` : t`Add new`;
         const subject = messages.heading.toLowerCase();
         return `${action} ${subject}`;
     }

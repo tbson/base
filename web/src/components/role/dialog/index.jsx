@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { t } from "ttag";
 import { Modal } from "antd";
 import Utils from "services/helpers/utils";
 import RequestUtils from "services/helpers/request_utils";
@@ -59,9 +60,9 @@ export default function RoleDialog({ pems, onChange }) {
             destroyOnClose
             visible={open}
             okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
-            okText="OK"
+            okText={t`Save`}
             onCancel={() => Service.toggle(false)}
-            cancelText="Thoát"
+            cancelText={t`Cancel`}
             title={Utils.getDialogTitle(id, messages)}
             width={1024}
         >

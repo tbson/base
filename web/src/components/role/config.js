@@ -1,3 +1,4 @@
+import { t } from "ttag";
 import RequestUtils from "services/helpers/request_utils";
 
 const urlMap = {
@@ -10,11 +11,12 @@ const urlMap = {
 };
 export const urls = RequestUtils.prefixMapValues(urlMap.base);
 
-const headingTxt = "Nhóm";
+const headingTxt = t`Group`;
+const name = headingTxt.toLowerCase();
 export const messages = {
     heading: headingTxt,
-    deleteOne: `Bạn có muốn xoá ${headingTxt.toLowerCase()} này?`,
-    deleteMultiple: `Bạn có muốn xoá những ${headingTxt.toLowerCase()} này?`
+    deleteOne: t`Do you want to remote this ${name}?`,
+    deleteMultiple: t`Do you want to remote these ${name}?`
 };
 
 export const emptyRecord = {
@@ -24,15 +26,8 @@ export const emptyRecord = {
 };
 
 export const labels = {
-    name: "Tên nhóm",
-    permissions: "Quyền"
-};
-
-export const pemGroupTrans = {
-    group: "Nhóm",
-    permission: "Quyền",
-    staff: "Nhân viên",
-    variable: "Cấu hình"
+    name: t`Group name`,
+    permissions: t`Permissions`
 };
 
 export const excludeGroups = ["user", "logentry", "token", "contenttype", "session"];

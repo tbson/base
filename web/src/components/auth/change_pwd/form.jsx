@@ -1,4 +1,5 @@
 import * as React from "react";
+import { t } from "ttag";
 import { Row, Col, Form, Input } from "antd";
 import FormUtils from "services/helpers/form_utils";
 import { urls } from "../config";
@@ -16,17 +17,17 @@ export default function ChangePwdForm({ onChange }) {
     const formAttrs = {
         old_password: {
             name: "old_password",
-            label: "Mật khẩu cũ",
+            label: t`Old password`,
             rules: [FormUtils.ruleRequired()]
         },
         password: {
             name: "password",
-            label: "Mật khẩu mới",
+            label: t`New password`,
             rules: [FormUtils.ruleRequired()]
         },
         password_confirm: {
             name: "password_confirm",
-            label: "Mật mới nhập lại",
+            label: t`Confirm new password`,
             rules: [FormUtils.ruleRequired()]
         }
     };

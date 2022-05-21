@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { t } from "ttag";
 import { Row, Col, Button, Table } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Pagination, { defaultLinks } from "components/common/table/pagination";
@@ -30,15 +31,15 @@ export default function VariableTable() {
                 });
         };
 
-    const searchList = (keyword) => {
+    function searchList(keyword) {
         getList()("", keyword ? { search: keyword } : {});
-    };
+    }
 
     useEffect(() => {
         getList(false)();
     }, []);
 
-    const onDelete = (id) => {
+    function onDelete(id) {
         const r = window.confirm(messages.deleteOne);
         if (!r) return;
 
@@ -48,9 +49,9 @@ export default function VariableTable() {
                 setList([...list.filter((item) => item.id !== id)]);
             })
             .finally(() => Utils.toggleGlobalLoading(false));
-    };
+    }
 
-    const onBulkDelete = (ids) => {
+    function onBulkDelete(ids) {
         const r = window.confirm(messages.deleteMultiple);
         if (!r) return;
 
@@ -60,9 +61,9 @@ export default function VariableTable() {
                 setList([...list.filter((item) => !ids.includes(item.id))]);
             })
             .finally(() => Utils.toggleGlobalLoading(false));
-    };
+    }
 
-    const onChange = (data, id) => {
+    function onChange(data, id) {
         if (!id) {
             setList([{ ...data, key: data.id }, ...list]);
         } else {
@@ -71,7 +72,7 @@ export default function VariableTable() {
             list[index] = data;
             setList([...list]);
         }
-    };
+    }
 
     const columns = [
         {
@@ -130,7 +131,7 @@ export default function VariableTable() {
                         disabled={!ids.length}
                         onClick={() => onBulkDelete(ids)}
                     >
-                        Xoá chọn
+                        {t`Remove selected`}
                     </Button>
                 </Col>
                 <Col span={12} className="right">
@@ -139,7 +140,7 @@ export default function VariableTable() {
                         icon={<PlusOutlined />}
                         onClick={() => Dialog.toggle()}
                     >
-                        Thêm mới
+                        {t`Add new`}
                     </Button>
                 </Col>
             </Row>

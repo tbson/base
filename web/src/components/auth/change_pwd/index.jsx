@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { t } from "ttag";
 import { Modal } from "antd";
 import Utils from "services/helpers/utils";
 import Form from "./form";
@@ -35,10 +36,10 @@ export default function ChangePwd() {
             destroyOnClose
             visible={open}
             okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
-            okText="OK"
+            okText={t`Change password`}
             onCancel={() => Service.toggle(false)}
-            cancelText="Thoát"
-            title="Đổi mật khẩu"
+            cancelText={t`Cancel`}
+            title={t`Change password`}
         >
             <Form
                 onChange={() => {

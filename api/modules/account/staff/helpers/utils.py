@@ -1,4 +1,6 @@
 from django.db.models import QuerySet
+from django.contrib.auth.models import Group
+from modules.account.helpers.srs import GroupSr
 from modules.account.staff.models import Staff
 from modules.account.staff.helpers.srs import StaffSr
 from modules.account.user.helpers.utils import UserUtils
@@ -12,12 +14,10 @@ class StaffUtils:
             raise Exception("Indext must be start with 1.")
 
         def get_data(i: int) -> dict:
-            phone_number = "+8490669652{}".format(i)
-            if i >= 10:
-                phone_number = "+849066965{}".format(i)
+            phone_number = f"+849066965{i}" if i >= 10 else f"+8490669652{i}"
             test_password = "SamplePassword123!@#"
             data = {
-                "email": "test{}@gmail.com".format(i),
+                "email": f"test{i}@gmail.com",
                 "phone_number": phone_number,
                 "first_name": f"first{i}",
                 "last_name": f"last{i}",
@@ -62,3 +62,8 @@ class StaffUtils:
         sr = StaffSr(staff, data=staff_data, partial=True)
         sr.is_valid(raise_exception=True)
         return sr.save()
+
+    @staticmethod
+    def get_list_group() -> list:
+        raw_data = GroupSr(Group.objects.exclude(name="customer"), many=True).data
+        return [{"value": group["id"], "label": group["name"]} for group in raw_data]

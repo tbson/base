@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { t } from "ttag";
 import { Row, Col, Button, Table } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Pagination, { defaultLinks } from "components/common/table/pagination";
@@ -7,6 +9,7 @@ import SearchInput from "components/common/table/search_input";
 import Utils from "services/helpers/utils";
 import RequestUtils from "services/helpers/request_utils";
 import Dialog from "./dialog";
+import { staffOptionsSt } from "./states";
 import { urls, labels, messages } from "./config";
 
 export default function StaffTable() {
@@ -14,6 +17,7 @@ export default function StaffTable() {
     const [list, setList] = useState([]);
     const [ids, setIds] = useState([]);
     const [links, setLinks] = useState(defaultLinks);
+    const setStaffOptions = useSetRecoilState(staffOptionsSt);
 
     const getList =
         (showLoading = true) =>
@@ -23,6 +27,8 @@ export default function StaffTable() {
                 .then((resp) => {
                     setLinks(resp.data.links);
                     setList(Utils.appendKey(resp.data.items));
+                    console.log(resp.data.extra.options);
+                    setStaffOptions(resp.data.extra.options);
                 })
                 .finally(() => {
                     setInit(false);
@@ -134,7 +140,7 @@ export default function StaffTable() {
                         disabled={!ids.length}
                         onClick={() => onBulkDelete(ids)}
                     >
-                        Xoá chọn
+                        {t`Remove selected`}
                     </Button>
                 </Col>
                 <Col span={12} className="right">
@@ -143,7 +149,7 @@ export default function StaffTable() {
                         icon={<PlusOutlined />}
                         onClick={() => Dialog.toggle()}
                     >
-                        Thêm mới
+                        {t`Add new`}
                     </Button>
                 </Col>
             </Row>

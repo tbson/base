@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { t } from "ttag";
 import { Row, Col, Button, Table } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Pagination, { defaultLinks } from "components/common/table/pagination";
@@ -121,7 +122,7 @@ export default function RoleTable() {
                         disabled={!ids.length}
                         onClick={() => onBulkDelete(ids)}
                     >
-                        Xoá chọn
+                        {t`Remove selected`}
                     </Button>
                 </Col>
                 <Col span={12} className="right">
@@ -130,7 +131,7 @@ export default function RoleTable() {
                         icon={<PlusOutlined />}
                         onClick={() => Dialog.toggle()}
                     >
-                        Thêm mới
+                        {t`Add new`}
                     </Button>
                 </Col>
             </Row>

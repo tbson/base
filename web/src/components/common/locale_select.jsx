@@ -15,6 +15,7 @@ export default function LocaleSelect() {
             defaultValue={LocaleUtils.getLocale()}
             onChange={(value) => {
                 setLocale(LocaleUtils.setLocale(value));
+                location.reload();
             }}
         >
             {LocaleUtils.getSupportedLocales().map((locale) => (
