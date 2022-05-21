@@ -20,7 +20,7 @@ class RoleTestCase(TestCase):
         token = TokenUtils.generate_test_token(staff)
 
         self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
+        self.client.credentials(HTTP_AUTHORIZATION=f"JWT {token}")
 
         self.items = RoleUtils.seeding(3)
 
@@ -127,6 +127,6 @@ class RoleTestCase(TestCase):
 
         # Remove list success
         ids = ",".join([str(self.items[1].pk), str(self.items[2].pk)])
-        response = self.client.delete(self.base_url + "?ids={}".format(ids))
+        response = self.client.delete(f"{self.base_url}?ids={ids}")
         self.assertEqual(response.status_code, 204)
         self.assertEqual(Role.objects.count(), 0)

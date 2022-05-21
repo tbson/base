@@ -19,7 +19,7 @@ class StaffTestCase(TestCase):
         token = TokenUtils.generate_test_token(staff)
 
         self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
+        self.client.credentials(HTTP_AUTHORIZATION=f"JWT {token}")
 
         self.items = StaffUtils.seeding(3)
 
@@ -53,7 +53,6 @@ class StaffTestCase(TestCase):
             self.base_url, json.dumps(item4), content_type="application/json"
         )
 
-        # self.assertEqual(resp.status_code, 200)
         resp = resp.json()
         self.assertEqual(Staff.objects.count(), 4)
 
@@ -97,8 +96,11 @@ class StaffTestCase(TestCase):
 
         # Remove list success
         resp = self.client.delete(
-            self.base_url
-            + "?ids={}".format(",".join([str(self.items[0].pk), str(self.items[2].pk)]))
+            (
+                self.base_url
+                + f'?ids={",".join([str(self.items[0].pk), str(self.items[2].pk)])}'
+            )
         )
+
         self.assertEqual(resp.status_code, 204)
         self.assertEqual(Staff.objects.count(), 0)
