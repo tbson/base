@@ -15,7 +15,7 @@ class VerifUtils:
 
     @staticmethod
     def get_subject():
-        return _("{} - Verification code".format(settings.APP_TITLE))
+        return _(f"{settings.APP_TITLE} - Verification code")
 
     @staticmethod
     def get_error_message():
@@ -24,7 +24,7 @@ class VerifUtils:
     @staticmethod
     def send_confirmation_email(subject, to_email, verification_code, lang):
         body = render_to_string(
-            "emails/signup/{}.html".format(lang),
+            f"emails/signup/{lang}.html",
             {"base_url": Utils.get_base_url(), "verification_code": verification_code},
         )
 
@@ -34,8 +34,9 @@ class VerifUtils:
     def send_noti_after_creating_email(subject: str, to_email: str):
         body = render_to_string(
             "emails/noti_after_creating.html",
-            {"login_url": "{}#/login".format(Utils.get_base_url())},
+            {"login_url": f"{Utils.get_base_url()}#/login"},
         )
+
         Utils.send_email_async(subject, body, to_email)
 
     @staticmethod
@@ -61,7 +62,7 @@ class VerifUtils:
             VerifUtils.send_confirmation_email(subject, target, code, lang)
 
             return (True, uid)
-        except Exception:
+        except Exception:  # skipcq: whatever error
             return (False, VerifUtils.get_error_message())
 
     @staticmethod

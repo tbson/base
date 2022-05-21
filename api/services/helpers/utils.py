@@ -60,7 +60,7 @@ class Utils:
             loop = asyncio.get_event_loop()
             if loop.is_closed():
                 loop = create_looop()
-        except Exception:
+        except Exception:  # skipcq: whatever error
             loop = create_looop()
 
         return loop
