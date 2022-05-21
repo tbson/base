@@ -44,14 +44,6 @@ export default class RequestUtils {
     }
 
     /**
-     * Get base URL for API call
-     * @returns {string}
-     */
-    static getApiBaseUrl() {
-        return API_PREFIX;
-    }
-
-    /**
      * Prepare payload for axios, if method is not POST or PUT
      *  Append it to a map with params key
      * @param {string} method
@@ -187,18 +179,6 @@ export default class RequestUtils {
     }
 
     /**
-     * convertParams.
-     *
-     * @param {Method} method
-     * @param {Dict} data
-     * @returns {Dict}
-     */
-    static convertParams(method, data) {
-        if (["post", "put"].includes(method.toLowerCase())) return data;
-        return { params: data };
-    }
-
-    /**
      * prefixMapValues.
      *
      * @param {Object} input
@@ -216,47 +196,6 @@ export default class RequestUtils {
             }
         }
         return result;
-    }
-
-    /**
-     * fileInObject.
-     *
-     * @param {Object} data
-     * @returns {boolean}
-     */
-    static fileInObject(data) {
-        return !!Object.values(data).filter((item) => item instanceof Blob).length;
-    }
-
-    /**
-     * getJsonPayload.
-     *
-     * @param {Object} data
-     * @returns {Object}
-     */
-    static getJsonPayload(data) {
-        return {
-            data: data,
-            "Content-Type": "application/json"
-        };
-    }
-
-    /**
-     * getFormDataPayload.
-     *
-     * @param {Object} data
-     * @returns {Object}
-     */
-    static getFormDataPayload(data) {
-        const formData = new FormData();
-        for (const key in data) {
-            const value = data[key];
-            formData.set(key, value);
-        }
-        return {
-            data: formData,
-            "Content-Type": ""
-        };
     }
 
     /**
