@@ -26,7 +26,7 @@ class LoginView(TokenObtainPairView):
         error_message = _("Incorrect login information. Please try again")
         try:
             response = super().post(request, *args, **kwargs)
-        except Exception:
+        except Exception:  # skipcq: Catch every error when login
             return ResUtils.err(error_message)
         if response.status_code not in range(200, 300):
             return ResUtils.err(error_message)

@@ -33,7 +33,7 @@ class TokenUtils:
     def refresh(refresh_token: str) -> str:
         try:
             return str(RefreshToken(refresh_token).access_token)
-        except Exception:
+        except Exception:  # skipcq: whatever error
             return ""
 
     @staticmethod
@@ -45,7 +45,7 @@ class TokenUtils:
         try:
             user = User.objects.get(username=username)
             return TokenUtils.__generate(user)
-        except Exception:
+        except Exception:  # skipcq: whatever error
             return ""
 
     @staticmethod
@@ -54,6 +54,6 @@ class TokenUtils:
             jwt_auth = JWTAuthentication()
             validated_token = jwt_auth.get_validated_token(token)
             return jwt_auth.get_user(validated_token)
-        except Exception as e:
+        except Exception as e:  # skipcq: whatever error
             print(repr(e))
             return None

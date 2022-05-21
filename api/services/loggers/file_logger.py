@@ -42,5 +42,5 @@ class FileLogger:
 
             LOGGER.debug(file)
             LOGGER.debug(str(content))
-        except Exception as e:
+        except Exception as e:  # skipcq: whatever error
             print(repr(e))

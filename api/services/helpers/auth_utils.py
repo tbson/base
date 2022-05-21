@@ -14,7 +14,7 @@ class AuthUtils:
             token = {"token": token}
             data = TokenVerifySerializer().validate(token)
             return data["user"]
-        except Exception:
+        except Exception:  # skipcq: whatever error
             return None
 
     @staticmethod

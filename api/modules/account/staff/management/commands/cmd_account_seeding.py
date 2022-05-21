@@ -23,7 +23,7 @@ class Command(BaseCommand):
             user.is_staff = True
             user.is_superuser = True
             user.save()
-        except Exception:
+        except Exception:  # skipcq: whatever error
             pass
 
         # Create group

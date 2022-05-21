@@ -161,7 +161,7 @@ class Utils:
         try:
             result = datetime.strptime(date_str, settings.STANDARD_DATE_FORMAT)
             return result.date()
-        except Exception:
+        except Exception:  # skipcq: whatever error
             return None
 
     @staticmethod
@@ -171,11 +171,11 @@ class Utils:
         try:
             format_str = settings.READABLE_DATE_FORMAT
             return datetime.strptime(date_str, format_str)
-        except Exception:
+        except Exception:  # skipcq: whatever error
             try:
                 format_str = settings.STANDARD_DATETIME_FORMAT
                 return datetime.strptime(date_str, format_str)
-            except Exception:
+            except Exception:  # skipcq: whatever error
                 return None
 
     @staticmethod
@@ -183,7 +183,7 @@ class Utils:
         try:
             date_obj = Utils.str_to_datetime(date_str)
             return Utils.date_to_readable_str(date_obj)
-        except Exception:
+        except Exception:  # skipcq: Whatever error, return None
             return None
 
     @staticmethod
@@ -265,7 +265,7 @@ class Utils:
 
             result = email.send()
             return (email, result)
-        except Exception as e:
+        except Exception as e:  # skipcq: Sending email can be failed
             print(Utils.return_exception(e))
             return e
 
@@ -285,7 +285,7 @@ class Utils:
             token = {"token": token}
             data = TokenVerifySerializer().validate(token)
             return data["user"]
-        except Exception:
+        except Exception:  # skipcq: whatever error
             return None
 
     @staticmethod
