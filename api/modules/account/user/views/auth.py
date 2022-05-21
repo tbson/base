@@ -1,3 +1,4 @@
+import contextlib
 from django.contrib.auth.hashers import make_password, check_password
 from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
@@ -51,7 +52,7 @@ class RefreshTokenView(APIView):
 class RefreshCheckView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, format=None):
+    def get(self, request):
         return ResUtils.res({})
 
 
@@ -59,21 +60,18 @@ class LogoutView(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        try:
+        with contextlib.suppress(Exception):
             token = TokenUtils.get_token_from_headers(request.headers, False)
             user = TokenUtils.get_user_from_token(token)
             user.refresh_token_signature = ""
             user.save()
-        except Exception:
-            pass
-
         return ResUtils.res({})
 
 
 class ResetPasswordView(APIView):
     permission_classes = (AllowAny,)
 
-    def post(self, request, format=None):
+    def post(self, request):
         username = self.request.data.get("username", "")
 
         default_response = ResUtils.res(
@@ -122,7 +120,7 @@ class ChangePasswordView(APIView):
     def get_object(self):
         return self.request.user
 
-    def post(self, request, format=None):
+    def post(self, request):
         params = self.request.data
 
         user = self.get_object()

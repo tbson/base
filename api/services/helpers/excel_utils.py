@@ -5,8 +5,8 @@ from openpyxl.writer.excel import save_virtual_workbook
 class ExcelUtils:
     @staticmethod
     def get_excel_obj(start_row=1, modifier=None):
-        def do_nothing(input):
-            return input
+        def do_nothing(input_data):
+            return input_data
 
         if modifier is None:
             modifier = do_nothing

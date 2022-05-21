@@ -82,7 +82,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "services.context_processors.template_global.vars",
+                "services.context_processors.template_global.global_vars",
             ],
         },
     },
