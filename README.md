@@ -27,7 +27,7 @@ Only use really needed one
 - Build in dashboard
 - Use React hooks for most of taks
 - Recoil help to dealth with global state if needed.
-- Multiple language support. `PoEdit` and `makemessages`/`dumpmessages` do all managing tasks.
+- Multiple language support. `PoEdit` and `fmakemessages`/`fdumpmessages` do all managing tasks.
 - Unit test support
 - Abstract away HTTP request operations
 
