@@ -5,7 +5,9 @@ import Utils from "services/helpers/utils";
 import Form from "./form";
 
 export class Service {
-    static toggleEvent = "TOGGLE_RESET_PASSWORD_CONFIRM_DIALOG";
+    static get toggleEvent() {
+        return "TOGGLE_RESET_PASSWORD_CONFIRM_DIALOG";
+    }
 
     static toggle(open = true) {
         Utils.event.dispatch(Service.toggleEvent, { open });

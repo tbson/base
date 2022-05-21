@@ -1,6 +1,6 @@
 import * as React from "react";
 import DatePicker from "services/components/DatePicker";
-import Utils from "services/helpers/utils";
+import { DATE_REABLE_FORMAT } from "services/helpers/utils";
 
 /**
  * DateInput.
@@ -16,7 +16,7 @@ export default function DateInput({ value, onChange }) {
         <DatePicker
             value={value}
             onChange={onChange}
-            format={Utils.DATE_REABLE_FORMAT}
+            format={DATE_REABLE_FORMAT}
             style={{ width: "100%" }}
         />
     );

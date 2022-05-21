@@ -1,10 +1,9 @@
-import { PROTOCOL, DOMAIN, API_PREFIX } from "src/consts";
 import axios from "axios";
 
-export default class Utils {
-    static DATE_REABLE_FORMAT = "DD/MM/YYYY";
-    static DATE_ISO_FORMAT = "YYYY-MM-DD";
+export const DATE_REABLE_FORMAT = "DD/MM/YYYY";
+export const DATE_ISO_FORMAT = "YYYY-MM-DD";
 
+export default class Utils {
     /**
      * responseIntercept.
      *
