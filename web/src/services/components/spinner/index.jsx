@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Spin } from "antd";
 import Utils from "services/helpers/utils";
+import Waiting from "services/components/waiting";
 
 export default function Component() {
     const [spinning, setSpinning] = useState(false);
@@ -15,10 +15,5 @@ export default function Component() {
         };
     }, []);
 
-    if (!spinning) return null;
-    return (
-        <div className="backdrop">
-            <Spin tip="Loading..." />
-        </div>
-    );
+    return spinning ? <Waiting /> : null;
 }

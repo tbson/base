@@ -7,17 +7,15 @@ import { localeSt } from "src/states";
 import PrivateRoute from "services/components/route/private_route.jsx";
 import NotMatch from "services/components/route/not_match";
 import ScrollToTop from "services/components/scroll_to_top";
+import Waiting from "services/components/waiting";
 import Utils from "services/helpers/utils";
 import LocaleUtils from "services/helpers/locale_utils";
 import Spinner from "services/components/spinner";
 
 Utils.responseIntercept();
 const lazyImport = (Component) => (props) => {
-    function FallBack() {
-        return <div>Loading...</div>;
-    }
     return (
-        <React.Suspense fallback={<FallBack />}>
+        <React.Suspense fallback={<Waiting />}>
             <Component {...props} />
         </React.Suspense>
     );
