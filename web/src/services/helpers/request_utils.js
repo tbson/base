@@ -135,7 +135,7 @@ export default class RequestUtils {
                         return Promise.reject(err);
                     }
                 } catch (err) {
-                    RequestUtils.request(checkUrl).catch((_err) => {
+                    RequestUtils.request(checkUrl).catch(() => {
                         // Logout
                         NavUtils.cleanAndMoveToLoginPage();
                         return Promise.reject(emptyError);
