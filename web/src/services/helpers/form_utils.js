@@ -13,7 +13,7 @@ export default class FormUtils {
     static setFormErrors(form = null) {
         return (errorDict) => {
             if ("detail" in errorDict) {
-                notification["error"]({
+                notification.error({
                     message: "Error",
                     description: errorDict.detail,
                     duration: 8
