@@ -16,7 +16,7 @@ import { LOGO_TEXT } from "src/consts";
 import StorageUtils from "services/helpers/storage_utils";
 import NavUtils from "services/helpers/nav_utils";
 import LocaleSelect from "services/components/locale_select.jsx";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 const { SubMenu } = Menu;
 
@@ -52,7 +52,7 @@ export default function Wrapper({ children }) {
     };
 
     return (
-        <Layout className="wrapper-container">
+        <Layout className={styles.wrapperContainer}>
             <Sider
                 trigger={null}
                 breakpoint="lg"

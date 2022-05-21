@@ -1,8 +1,8 @@
-.wrapper-container {
+.wrapperContainer {
     min-height: 100vh;
 }
 
-.wrapper-container .trigger {
+.wrapperContainer :global(.trigger) {
     font-size: 18px;
     line-height: 30px;
     padding: 5px 5px;
@@ -10,11 +10,11 @@
     transition: color 0.3s;
 }
 
-.wrapper-container .trigger:hover {
+.wrapperContainer :global(.trigger:hover) {
     color: #1890ff;
 }
 
-.wrapper-container .logo {
+.wrapperContainer :global(.logo) {
     height: 30px;
     margin: 0;
     font-size: 20px;
@@ -23,12 +23,12 @@
     padding-left: 25px;
 }
 
-.wrapper-container .site-layout .site-layout-header {
+.wrapperContainer :global(.site-layout) :global(.site-layout-header) {
     background: #EEEEEE;
     height: 34px;
     line-height: 34px;
 }
 
-.wrapper-container .site-layout .site-layout-content {
+.wrapperContainer :global(.site-layout) :global(.site-layout-content) {
     background: #fff;
 }
