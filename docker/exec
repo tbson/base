@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-INSTANCE_NAME="base"
+NAME="base"
 
 FIRST_ARG="$1"
 shift
@@ -37,19 +37,25 @@ if [ "$FIRST_ARG" == "-h" ]; then
 fi
 
 if [ "$FIRST_ARG" == "api" ] || [ "$FIRST_ARG" == "db" ] || [ "$FIRST_ARG" == "web" ]; then
-    docker compose exec "$INSTANCE_NAME"_"$FIRST_ARG" $ARGS
+    docker compose exec "$NAME"_"$FIRST_ARG" $ARGS
 elif [ "$FIRST_ARG" == "yarn" ]; then
-    docker compose exec "$INSTANCE_NAME"_web yarn $ARGS
+    docker compose exec "$NAME"_web yarn $ARGS
 elif [ "$FIRST_ARG" == "fserver" ]; then
-    docker compose exec "$INSTANCE_NAME"_web yarn dev
+    docker compose exec "$NAME"_web yarn dev
+elif [ "$FIRST_ARG" == "fmakemessages" ]; then
+    docker compose exec "$NAME"_web node_modules/.bin/ttag update src/locale/vi.po src
+    docker compose exec "$NAME"_web node_modules/.bin/ttag update src/locale/en.po src
+elif [ "$FIRST_ARG" == "fdumpmessages" ]; then
+    docker compose exec "$NAME"_web node_modules/.bin/ttag po2json src/locale/vi.po > ../web/src/locale/vi.po.json
+    docker compose exec "$NAME"_web node_modules/.bin/ttag po2json src/locale/en.po > ../web/src/locale/en.po.json
 elif [ "$FIRST_ARG" == "ftest" ]; then
-    docker compose exec "$INSTANCE_NAME"_web yarn test $ARGS
+    docker compose exec "$NAME"_web yarn test $ARGS
 elif [ "$FIRST_ARG" == "poetry" ]; then
-    docker compose exec "$INSTANCE_NAME"_api poetry $ARGS
+    docker compose exec "$NAME"_api poetry $ARGS
 elif [ "$FIRST_ARG" == "manage.py" ]; then
-    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py $ARGS
+    docker compose exec "$NAME"_api poetry run python manage.py $ARGS
 elif [ "$FIRST_ARG" == "bserver" ]; then
-    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py runserver 0.0.0.0:4000
+    docker compose exec "$NAME"_api poetry run python manage.py runserver 0.0.0.0:4000
 elif [ "$FIRST_ARG" == "up" ]; then
     docker_up
 elif [ "$FIRST_ARG" == "down" ]; then
@@ -60,20 +66,20 @@ elif [ "$FIRST_ARG" == "restart" ]; then
 elif [ "$FIRST_ARG" == "build" ]; then
     docker compose build --no-cache
 elif [ "$FIRST_ARG" == "pg_dump" ]; then
-    docker compose exec "$INSTANCE_NAME"_db pg_dump $ARGS
+    docker compose exec "$NAME"_db pg_dump $ARGS
     # ./exec pg_dump -U username db_name > db.sql
 elif [ "$FIRST_ARG" == "clean-db" ]; then
     docker_down
     rm -rf dbdata
     mkdir dbdata
     docker_up
-    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py migrate
-    docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py cmd_account_seeding
+    docker compose exec "$NAME"_api poetry run python manage.py migrate
+    docker compose exec "$NAME"_api poetry run python manage.py cmd_account_seeding
 elif [ "$FIRST_ARG" == "btest" ]; then
     if [[ $1 ]]; then
-        docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py test $1
+        docker compose exec "$NAME"_api poetry run python manage.py test $1
     else
-        docker compose exec "$INSTANCE_NAME"_api poetry run python manage.py test
+        docker compose exec "$NAME"_api poetry run python manage.py test
     fi
 else
     echo "Invalid argument, please use following arguments:"

@@ -6,12 +6,26 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: vi\n"
-"mime-version: 1.0\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals = 1; plural = 0;\n"
+"mime-version: 1.0\n"
 "x-generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: /Users/tbson/Code/web/base/web/src/components/auth/login/index.jsx:55
+#: src/components/auth/login/index.jsx:59
 msgid "Forgot password"
 msgstr "Quên mật khẩu"
+
+#: src/components/auth/login/form.jsx:20
+msgid "Username"
+msgstr "Tên đăng nhập"
+
+#: src/components/auth/login/form.jsx:25
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: src/components/auth/login/form.jsx:55 src/components/auth/login/index.jsx:52
+msgid "Login"
+msgstr "Đăng nhập"

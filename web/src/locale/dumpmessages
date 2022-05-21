@@ -1,2 +1,0 @@
-../../node_modules/.bin/ttag po2json vi.po > vi.po.json
-../../node_modules/.bin/ttag po2json en.po > en.po.json

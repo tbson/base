@@ -49,7 +49,7 @@ export default function Login() {
                     md={{ span: 12, offset: 6 }}
                     lg={{ span: 8, offset: 8 }}
                 >
-                    <Card title="Đăng nhập" style={styles.wrapper}>
+                    <Card title={t`Login`} style={styles.wrapper}>
                         <Form onChange={handleLogin}>
                             <>
                                 <Button
