@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group as Role
 
@@ -59,12 +59,12 @@ class RoleViewSet(GenericViewSet):
         obj.delete()
         return ResUtils.res(status=status.HTTP_204_NO_CONTENT)
 
+    @transaction.atomic
     @action(methods=["delete"], detail=False)
     def delete_list(self, request):
         pk = self.request.query_params.get("ids", "")
-        pk = [int(pk)] if pk.isdigit() else map(lambda x: int(x), pk.split(","))
-        result = Role.objects.filter(pk__in=pk)
-        if result.count() == 0:
-            raise Http404
-        result.delete()
+        pks = [int(pk)] if pk.isdigit() else [int(i) for i in pk.split(",")]
+        for pk in pks:
+            item = get_object_or_404(Role, pk=pk)
+            item.delete()
         return ResUtils.res(status=status.HTTP_204_NO_CONTENT)
