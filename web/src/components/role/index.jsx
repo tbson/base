@@ -1,19 +1,19 @@
 import * as React from "react";
-import Wrapper from "services/components/wrapper";
-import PageHeading from "services/components/page_heading";
+import SideBarLayout from "components/common/layout/side_bar";
+import PageHeading from "components/common/page_heading";
 import Table from "./table";
 import { messages } from "./config";
 
 export default function Role() {
     return (
-        <Wrapper>
+        <SideBarLayout>
             <>
                 <PageHeading>
                     <>{messages.heading}</>
                 </PageHeading>
                 <Table />
             </>
-        </Wrapper>
+        </SideBarLayout>
     );
 }
 

@@ -3,8 +3,8 @@ import { useRecoilValue } from "recoil";
 import { Form, Input } from "antd";
 import Utils from "services/helpers/utils";
 import FormUtils from "services/helpers/form_utils";
-import SelectInput from "services/components/form/ant/input/select_input.jsx";
-import CheckInput from "services/components/form/ant/input/check_input.jsx";
+import SelectInput from "components/common/form/ant/input/select_input.jsx";
+import CheckInput from "components/common/form/ant/input/check_input.jsx";
 import { urls, labels, emptyRecord } from "../config";
 import { listGroupSt } from "../states";
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import DatePicker from "services/components/DatePicker";
+import DatePicker from "components/common/form/ant/date_picker";
 import { DATE_REABLE_FORMAT } from "services/helpers/utils";
 
 /**

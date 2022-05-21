@@ -4,13 +4,13 @@ import { RecoilRoot, useRecoilState } from "recoil";
 import { useLocale } from "ttag";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { localeSt } from "src/states";
-import PrivateRoute from "services/components/route/private_route.jsx";
-import NotMatch from "services/components/route/not_match";
-import ScrollToTop from "services/components/scroll_to_top";
-import Waiting from "services/components/waiting";
+import PrivateRoute from "components/common/route/private_route.jsx";
+import NotMatch from "components/common/route/not_match";
+import ScrollToTop from "components/common/scroll_to_top";
+import Waiting from "components/common/waiting";
+import Spinner from "components/common/spinner";
 import Utils from "services/helpers/utils";
 import LocaleUtils from "services/helpers/locale_utils";
-import Spinner from "services/components/spinner";
 
 Utils.responseIntercept();
 const lazyImport = (Component) => (props) => {

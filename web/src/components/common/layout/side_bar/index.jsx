@@ -15,7 +15,7 @@ import {
 import { LOGO_TEXT } from "src/consts";
 import StorageUtils from "services/helpers/storage_utils";
 import NavUtils from "services/helpers/nav_utils";
-import LocaleSelect from "services/components/locale_select.jsx";
+import LocaleSelect from "components/common/locale_select.jsx";
 import styles from "./styles.module.css";
 
 const { SubMenu } = Menu;
@@ -23,12 +23,12 @@ const { SubMenu } = Menu;
 const { Header, Sider, Content } = Layout;
 
 /**
- * Wrapper.
+ * SideBarLayout.
  *
  * @param {Object} props
  * @param {ReactElement} props.children
  */
-export default function Wrapper({ children }) {
+export default function SideBarLayout({ children }) {
     const navigate = useNavigate();
     const location = useLocation();
 

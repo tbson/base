@@ -2,8 +2,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Divider, Button } from "antd";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
-import Wrapper from "services/components/wrapper";
-import PageHeading from "services/components/page_heading";
+import SideBarLayout from "components/common/layout/side_bar";
+import PageHeading from "components/common/page_heading";
 import RequestUtils from "services/helpers/request_utils";
 import ChangePwd from "components/auth/change_pwd";
 import { urls, messages } from "../config";
@@ -28,7 +28,7 @@ export default function Profile() {
         });
     }, []);
     return (
-        <Wrapper>
+        <SideBarLayout>
             <>
                 <PageHeading>
                     <>{messages.heading}</>
@@ -56,7 +56,7 @@ export default function Profile() {
                     <ChangePwd />
                 </div>
             </>
-        </Wrapper>
+        </SideBarLayout>
     );
 }
 

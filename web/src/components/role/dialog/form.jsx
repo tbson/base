@@ -3,7 +3,7 @@ import { Form, Input } from "antd";
 import Utils from "services/helpers/utils";
 import RequestUtils from "services/helpers/request_utils";
 import FormUtils from "services/helpers/form_utils";
-import TransferInput from "services/components/form/ant/input/transfer_input.jsx";
+import TransferInput from "components/common/form/ant/input/transfer_input.jsx";
 import { urls, labels, emptyRecord } from "../config";
 
 /**

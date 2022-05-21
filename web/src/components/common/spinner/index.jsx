@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Utils from "services/helpers/utils";
-import Waiting from "services/components/waiting";
+import Waiting from "components/common/waiting";
 
 export default function Component() {
     const [spinning, setSpinning] = useState(false);
