@@ -4,7 +4,7 @@ from .models import User
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
-class UserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = User
@@ -45,4 +45,4 @@ class UserAdmin(UserAdmin):
     ordering = ("email",)
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)
