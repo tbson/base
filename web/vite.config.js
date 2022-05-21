@@ -20,5 +20,15 @@ export default defineConfig({
             protocol: "wss"
         }
     },
-    plugins: [react()]
+    plugins: [react()],
+    css: {
+        preprocessorOptions: {
+            less: {
+                modifyVars: {
+                    "primary-color": "@blue-6"
+                },
+                javascriptEnabled: true
+            }
+        }
+    }
 });
