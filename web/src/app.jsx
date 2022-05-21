@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { RecoilRoot, useRecoilState } from "recoil";
 import { useLocale } from "ttag";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
@@ -11,17 +11,23 @@ import Utils from "services/helpers/utils";
 import LocaleUtils from "services/helpers/locale_utils";
 import Spinner from "services/components/spinner";
 
-const Login = React.lazy(() => import("components/auth/login"));
-const Profile = React.lazy(() => import("components/auth/profile"));
-const Staff = React.lazy(() => import("components/staff"));
-const Role = React.lazy(() => import("components/role"));
-const Variable = React.lazy(() => import("components/variable"));
-
 Utils.responseIntercept();
+const lazyImport = (Component) => (props) => {
+    function FallBack() {
+        return <div>Loading...</div>;
+    }
+    return (
+        <React.Suspense fallback={<FallBack />}>
+            <Component {...props} />
+        </React.Suspense>
+    );
+};
 
-function FallBack() {
-    return <div>Loading...</div>;
-}
+const Login = lazyImport(lazy(() => import("components/auth/login")));
+const Profile = lazyImport(lazy(() => import("components/auth/profile")));
+const Staff = lazyImport(lazy(() => import("components/staff")));
+const Role = lazyImport(lazy(() => import("components/role")));
+const Variable = lazyImport(lazy(() => import("components/variable")));
 
 function Index() {
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -42,56 +48,14 @@ function Index() {
             <BrowserRouter>
                 <ScrollToTop />
                 <Routes>
-                    <Route
-                        path="/login"
-                        element={
-                            <React.Suspense fallback={<FallBack />}>
-                                <Login />
-                            </React.Suspense>
-                        }
-                    />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/" element={<PrivateRoute />}>
-                        <Route
-                            path="/"
-                            element={
-                                <React.Suspense fallback={<FallBack />}>
-                                    <Profile />
-                                </React.Suspense>
-                            }
-                        />
-                        <Route
-                            path="/staff"
-                            element={
-                                <React.Suspense fallback={<FallBack />}>
-                                    <Staff />
-                                </React.Suspense>
-                            }
-                        />
-                        <Route
-                            path="/role"
-                            element={
-                                <React.Suspense fallback={<FallBack />}>
-                                    <Role />
-                                </React.Suspense>
-                            }
-                        />
-                        <Route
-                            path="/variable"
-                            element={
-                                <React.Suspense fallback={<FallBack />}>
-                                    <Variable />
-                                </React.Suspense>
-                            }
-                        />
+                        <Route path="/" element={<Profile />} />
+                        <Route path="/staff" element={<Staff />} />
+                        <Route path="/role" element={<Role />} />
+                        <Route path="/variable" element={<Variable />} />
                     </Route>
-                    <Route
-                        path="*"
-                        element={
-                            <React.Suspense fallback={<FallBack />}>
-                                <NotMatch />
-                            </React.Suspense>
-                        }
-                    />
+                    <Route path="*" element={<NotMatch />} />
                 </Routes>
             </BrowserRouter>
         </div>
