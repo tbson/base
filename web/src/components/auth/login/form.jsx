@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Button, Row, Col, Form, Input } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import FormUtils from "services/helpers/form_utils";

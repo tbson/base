@@ -1,3 +1,4 @@
+import * as React from "react";
 import DatePicker from "services/components/DatePicker";
 import Utils from "services/helpers/utils";
 

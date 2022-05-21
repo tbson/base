@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState, useEffect } from "react";
 import { Modal } from "antd";
 import Utils from "services/helpers/utils";

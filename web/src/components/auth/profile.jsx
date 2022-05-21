@@ -1,3 +1,4 @@
+import * as React from "react";
 import StorageUtils from "services/helpers/storage_utils";
 import StaffProfile from "components/staff/profile";
 export default function Profile() {

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import StorageUtils from "services/helpers/storage_utils";
 
