@@ -1,3 +1,4 @@
+import contextlib
 from rest_framework.permissions import AllowAny
 from services.helpers.token_utils import TokenUtils
 
@@ -9,14 +10,11 @@ class StripJWT:
     def __call__(self, request):
         return self.get_response(request)
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        token_header = request.headers.get("Authorization")
-        if token_header:
+    def process_view(self, request, view_func, _view_args, _view_kwargs):
+        if request.headers.get("Authorization"):
             token = TokenUtils.get_token_from_headers(request.headers)
-            bearer_token = "bearer {}".format(token)
+            bearer_token = f"bearer {token}"
 
-            try:
+            with contextlib.suppress(AttributeError):
                 if AllowAny in view_func.view_class.permission_classes and token:
                     request.META["HTTP_AUTHORIZATION"] = bearer_token
-            except AttributeError:
-                pass
