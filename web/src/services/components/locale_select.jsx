@@ -1,16 +1,21 @@
 import { Select } from "antd";
+import { useRecoilState } from "recoil";
+import { useLocale } from "ttag";
 import LocaleUtils from "services/helpers/locale_utils";
+import { localeSt } from "src/states";
 
 const { Option } = Select;
 
-function handleChange(value) {
-    LocaleUtils.setLocale(value);
-    location.reload();
-}
-
 export default function LocaleSelect() {
+    const [locale, setLocale] = useRecoilState(localeSt);
+    useLocale(locale);
     return (
-        <Select defaultValue={LocaleUtils.getLocale()} onChange={handleChange}>
+        <Select
+            defaultValue={LocaleUtils.getLocale()}
+            onChange={(value) => {
+                setLocale(LocaleUtils.setLocale(value));
+            }}
+        >
             {LocaleUtils.getSupportedLocales().map((locale) => (
                 <Option key={locale} value={locale}>
                     {locale}

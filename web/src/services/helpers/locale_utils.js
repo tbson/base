@@ -1,4 +1,4 @@
-import { addLocale, useLocale } from "ttag";
+import { addLocale } from "ttag";
 import StorageUtils from "services/helpers/storage_utils";
 
 const DEFAULT_LOCALE = "vi";
@@ -15,13 +15,10 @@ export default class LocaleUtils {
         }
         return result;
     }
-    static activateLocale() {
-        const locale = LocaleUtils.getLocale();
-        useLocale(locale);
-    }
     static setLocale(locale = DEFAULT_LOCALE) {
         StorageUtils.setStorage("locale", locale);
-        LocaleUtils.activateLocale();
+        // useLocale(locale);
+        return locale;
     }
     static getLocale() {
         let locale = StorageUtils.getStorageStr("locale");

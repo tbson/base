@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
+import { useLocale } from "ttag";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import PrivateRoute from "services/components/route/private_route.jsx";
 import NotMatch from "services/components/route/not_match";
@@ -12,22 +13,25 @@ import Profile from "components/auth/profile";
 import Staff from "components/staff";
 import Role from "components/role";
 import Variable from "components/variable";
+import { localeSt } from "src/states";
 
 Utils.responseIntercept();
 
-function App() {
+function Index() {
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [locale, setLocale] = useRecoilState(localeSt);
+    useLocale(locale);
     useEffect(() => {
         LocaleUtils.fetchLocales().then(() => {
-            LocaleUtils.activateLocale();
             setDataLoaded(true);
+            setLocale(LocaleUtils.setLocale(locale));
         });
     }, []);
     if (!dataLoaded) {
         return <div>Loading...</div>;
     }
     return (
-        <RecoilRoot>
+        <div key={locale}>
             <Spinner />
             <BrowserRouter>
                 <ScrollToTop />
@@ -42,6 +46,14 @@ function App() {
                     <Route path="*" element={<NotMatch />} />
                 </Routes>
             </BrowserRouter>
+        </div>
+    );
+}
+
+function App() {
+    return (
+        <RecoilRoot>
+            <Index />
         </RecoilRoot>
     );
 }
