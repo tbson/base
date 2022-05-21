@@ -1,3 +1,4 @@
-export default function BlankLayout({ children }) {
-    return children;
+import { Outlet } from "react-router-dom";
+export default function BlankLayout() {
+    return <Outlet />;
 }

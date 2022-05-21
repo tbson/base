@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useNavigate, useLocation, NavLink, Outlet } from "react-router-dom";
 import { Layout, Menu, Row, Col } from "antd";
 import {
     MenuUnfoldOutlined,
@@ -24,11 +24,8 @@ const { Header, Sider, Content } = Layout;
 
 /**
  * SideBarLayout.
- *
- * @param {Object} props
- * @param {ReactElement} props.children
  */
-export default function SideBarLayout({ children }) {
+export default function SideBarLayout() {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -141,7 +138,9 @@ export default function SideBarLayout({ children }) {
                         </Col>
                     </Row>
                 </Header>
-                <Content className="site-layout-content">{children}</Content>
+                <Content className="site-layout-content">
+                    <Outlet />
+                </Content>
             </Layout>
         </Layout>
     );

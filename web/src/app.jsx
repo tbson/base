@@ -9,6 +9,8 @@ import NotMatch from "components/common/route/not_match";
 import ScrollToTop from "components/common/scroll_to_top";
 import Waiting from "components/common/waiting";
 import Spinner from "components/common/spinner";
+import BlankLayout from "components/common/layout/blank";
+import SideBarLayout from "components/common/layout/side_bar";
 import Utils from "services/helpers/utils";
 import LocaleUtils from "services/helpers/locale_utils";
 
@@ -46,12 +48,16 @@ function Index() {
             <BrowserRouter>
                 <ScrollToTop />
                 <Routes>
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<BlankLayout />}>
+                        <Route path="/login/" element={<Login />} />
+                    </Route>
                     <Route path="/" element={<PrivateRoute />}>
-                        <Route path="/" element={<Profile />} />
-                        <Route path="/staff" element={<Staff />} />
-                        <Route path="/role" element={<Role />} />
-                        <Route path="/variable" element={<Variable />} />
+                        <Route path="/" element={<SideBarLayout />}>
+                            <Route path="/" element={<Profile />} />
+                            <Route path="/staff" element={<Staff />} />
+                            <Route path="/role" element={<Role />} />
+                            <Route path="/variable" element={<Variable />} />
+                        </Route>
                     </Route>
                     <Route path="*" element={<NotMatch />} />
                 </Routes>

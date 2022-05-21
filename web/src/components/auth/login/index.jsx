@@ -5,7 +5,6 @@ import { t } from "ttag";
 import { Row, Col, Card, Button } from "antd";
 import NavUtils from "services/helpers/nav_utils";
 import StorageUtils from "services/helpers/storage_utils";
-import BlankLayout from "components/common/layout/blank";
 import LocaleSelect from "components/common/locale_select.jsx";
 import Form from "./form";
 import OTPDialog from "../otp_dialog";
@@ -40,7 +39,7 @@ export default function Login() {
     }
 
     return (
-        <BlankLayout>
+        <div>
             <div className="right content">
                 <LocaleSelect />
             </div>
@@ -67,6 +66,6 @@ export default function Login() {
             <ResetPwdDialog onChange={onResetPassword} />
             <OTPDialog onChange={onOTP} />
             <ResetPwdConfirmDialog />
-        </BlankLayout>
+        </div>
     );
 }
