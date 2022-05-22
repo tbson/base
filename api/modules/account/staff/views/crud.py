@@ -42,12 +42,14 @@ class StaffViewSet(GenericViewSet):
         serializer = StaffSr(obj)
         return ResUtils.res(serializer.data)
 
+    @transaction.atomic
     @action(methods=["post"], detail=True)
     def add(self, request):
         obj = StaffUtils.create_staff(request.data)
         sr = StaffSr(obj)
         return ResUtils.res(sr.data)
 
+    @transaction.atomic
     @action(methods=["put"], detail=True)
     def change(self, request, pk=None):
         obj = get_object_or_404(Staff, pk=pk)
@@ -55,6 +57,7 @@ class StaffViewSet(GenericViewSet):
         sr = StaffSr(obj)
         return ResUtils.res(sr.data)
 
+    @transaction.atomic
     @action(methods=["delete"], detail=True)
     def delete(self, request, pk=None):
         item = get_object_or_404(Staff, pk=pk)
