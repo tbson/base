@@ -2,7 +2,6 @@ import json
 from rest_framework.test import APIClient
 from django.test import TestCase
 from django.contrib.auth.models import Group as Role, Permission
-from services.helpers.token_utils import TokenUtils
 from modules.account.staff.helpers.utils import StaffUtils
 from ..helpers.utils import RoleUtils
 
@@ -17,10 +16,8 @@ class RoleTestCase(TestCase):
         staff.user.is_staff = True
         staff.user.save()
 
-        token = TokenUtils.generate_test_token(staff)
-
         self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION=f"JWT {token}")
+        self.client.force_authenticate(user=staff.user)
 
         self.items = RoleUtils.seeding(3)
 
@@ -28,7 +25,7 @@ class RoleTestCase(TestCase):
         response = self.client.get(self.base_url)
         self.assertEqual(response.status_code, 200)
         response = response.json()
-        self.assertEqual(response["count"], 3)
+        self.assertEqual(response["count"], 4)  # Count automate created one
 
     def test_detail(self):
         # Item not exist
@@ -54,7 +51,7 @@ class RoleTestCase(TestCase):
             self.base_url, json.dumps(item4), content_type="application/json"
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Role.objects.count(), 4)
+        self.assertEqual(Role.objects.count(), 5)
 
     def test_edit(self):
         item3 = RoleUtils.seeding(3, True, False)
@@ -118,15 +115,15 @@ class RoleTestCase(TestCase):
         # Remove not exist
         response = self.client.delete(self.base_url_params.format(0))
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(Role.objects.count(), 3)
+        self.assertEqual(Role.objects.count(), 4)
 
         # Remove single success
         response = self.client.delete(self.base_url_params.format(self.items[0].pk))
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(Role.objects.count(), 2)
+        self.assertEqual(Role.objects.count(), 3)
 
         # Remove list success
         ids = ",".join([str(self.items[1].pk), str(self.items[2].pk)])
         response = self.client.delete(f"{self.base_url}?ids={ids}")
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(Role.objects.count(), 0)
+        self.assertEqual(Role.objects.count(), 1)

@@ -1,7 +1,6 @@
 import json
 from rest_framework.test import APIClient
 from django.test import TestCase
-from services.helpers.token_utils import TokenUtils
 from modules.account.staff.helpers.utils import StaffUtils
 from ..models import Variable
 from ..helpers.utils import VariableUtils
@@ -18,10 +17,8 @@ class VariableTestCase(TestCase):
         staff.user.is_staff = True
         staff.user.save()
 
-        token = TokenUtils.generate_test_token(staff)
-
         self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION="JWT " + token)
+        self.client.force_authenticate(user=staff.user)
 
         self.items = VariableUtils.seeding(3)
 

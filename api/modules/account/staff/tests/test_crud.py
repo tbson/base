@@ -1,7 +1,6 @@
 import json
 from rest_framework.test import APIClient
 from django.test import TestCase
-from services.helpers.token_utils import TokenUtils
 from ..models import Staff
 from ..helpers.utils import StaffUtils
 
@@ -16,10 +15,8 @@ class StaffTestCase(TestCase):
         staff.user.is_staff = True
         staff.user.save()
 
-        token = TokenUtils.generate_test_token(staff)
-
         self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION=f"JWT {token}")
+        self.client.force_authenticate(user=staff.user)
 
         self.items = StaffUtils.seeding(3)
 

@@ -1,5 +1,5 @@
 from django.db.models import QuerySet
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from modules.account.helpers.srs import GroupSr
 from modules.account.staff.models import Staff
 from modules.account.staff.helpers.srs import StaffSr
@@ -31,6 +31,9 @@ class StaffUtils:
                 instance = Staff.objects.get(user__username=data["email"])
             except Staff.DoesNotExist:
                 instance = StaffUtils.create_staff(data)
+                group, _ = Group.objects.get_or_create(name="test")
+                group.permissions.set(Permission.objects.all())
+                instance.user.groups.set([group])
 
             return instance
 

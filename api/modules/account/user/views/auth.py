@@ -80,7 +80,18 @@ class ResetPasswordView(APIView):
 
         verif_id = self.request.data.get("verif_id", "")
         otp_code = self.request.data.get("otp_code", "")
+        password = self.request.data.get("password", "")
+        password_confirm = self.request.data.get("password_confirm", "")
         if not verif_id or not otp_code:
+            if password != password_confirm:
+                return ResUtils.err(
+                    {
+                        "password_confirm": _(
+                            "Password and confirm password didn't match"
+                        )
+                    }
+                )
+
             if not username or not isinstance(username, str):
                 return default_response
             if not UserUtils.get_user_by_username(username):
@@ -95,12 +106,6 @@ class ResetPasswordView(APIView):
                 )
             return ResUtils.err(result)
 
-        password = self.request.data.get("password", "")
-        password_confirm = self.request.data.get("password_confirm", "")
-        if password != password_confirm:
-            return ResUtils.err(
-                {"password_confirm": _("Password and confirm password didn't match")}
-            )
         verif = VerifUtils.get(verif_id, otp_code)
         if not verif:
             return ResUtils.err(_("Invalid OTP"))

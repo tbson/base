@@ -12,7 +12,7 @@ class VariableUtils:
             raise Exception("Indext must be start with 1.")
 
         def get_data(i: int) -> dict:
-            data = {"uid": "uid{}".format(i), "value": "value{}".format(i)}
+            data = {"uid": f"uid{i}", "value": f"value{i}"}
             if save is False:
                 return data
             try:

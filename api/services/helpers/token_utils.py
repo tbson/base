@@ -37,14 +37,14 @@ class TokenUtils:
             return ""
 
     @staticmethod
-    def __generate(user: QuerySet) -> str:
+    def generate(user: QuerySet) -> str:
         return str(RefreshToken.for_user(user))
 
     @staticmethod
     def get_token_from_username(username: str) -> str:
         try:
             user = User.objects.get(username=username)
-            return TokenUtils.__generate(user)
+            return TokenUtils.generate(user)
         except Exception:  # skipcq: whatever error
             return ""
 
