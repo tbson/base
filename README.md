@@ -28,6 +28,8 @@ Only use really needed one
 - Use React hooks for most of taks
 - Recoil help to dealth with global state if needed.
 - Multiple language support. `PoEdit` and `fmakemessages`/`fdumpmessages` do all managing tasks.
+- Ready for customizing theme (Ant Design)
+- Unit test support
 - Unit test support
 - Abstract away HTTP request operations
 
