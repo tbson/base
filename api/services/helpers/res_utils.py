@@ -26,16 +26,42 @@ class ResUtils:
             user.refresh_token_signature = TokenUtils.get_token_signature(refresh_token)
             user.last_login = Utils.now()
             user.save()
-
-            if user.is_staff:
-                data["visible_menus"] = ResUtils.get_all_menus()
-            else:
-                data["visible_menus"] = ResUtils.get_visible_menus(user.groups.all())
+            data["permissions"] = ResUtils.get_grouped_permission(user)
 
             return data
         except Exception as e:
             print(repr(e))
             raise ValidationError({"detail": error_message})
+
+    @staticmethod
+    def get_grouped_permission(user):
+        ignore_permission_groups = [
+            "logentry",
+            "permission",
+            "contenttype",
+            "token",
+            "tokenproxy",
+            "session",
+            "user",
+            "whitelisttarget",
+            "verif",
+            "veriflog",
+        ]
+        queryset = (
+            Permission.objects.all()
+            if user.is_staff
+            else Permission.objects.filter(
+                groups__in=user.groups.values_list("id", flat=True)
+            ).distinct()
+        )
+        list_item = queryset.values_list("codename", flat=True)
+        result = {}
+        for item in list_item:
+            group = item.split("_")[-1]
+            permission = item[: -len(group) - 1]
+            if group not in ignore_permission_groups:
+                result[group] = result.get(group, []) + [permission]
+        return result
 
     @staticmethod
     def get_visible_menus(groups: list[models.QuerySet]) -> list[str]:

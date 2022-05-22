@@ -35,8 +35,16 @@ export default function MainLayout() {
         setCollapsed(!collapsed);
     };
 
-    const visibleMenus = StorageUtils.getVisibleMenus();
+    const permissions = StorageUtils.getPermissions();
     const logout = NavUtils.logout(navigate);
+
+    const canView = (menu) => {
+        try {
+            return permissions[menu].includes("view");
+        } catch (_e) {
+            return false;
+        }
+    };
 
     /**
      * processSelectedKey.
@@ -44,10 +52,10 @@ export default function MainLayout() {
      * @param {string} pathname
      * @returns {string}
      */
-    const processSelectedKey = (pathname) => {
+    function processSelectedKey(pathname) {
         if (pathname.startsWith("/staff")) return "/staff";
         return pathname;
-    };
+    }
 
     return (
         <Layout className={styles.wrapperContainer}>
@@ -76,7 +84,7 @@ export default function MainLayout() {
                         </NavLink>
                     </Menu.Item>
 
-                    {visibleMenus.includes("variable") && (
+                    {canView("variable") && (
                         <Menu.Item key="/variable">
                             <NavLink to="/variable">
                                 <SettingFilled />
@@ -85,7 +93,7 @@ export default function MainLayout() {
                         </Menu.Item>
                     )}
                     <SubMenu key="company" icon={<GoldenFilled />} title={t`Company`}>
-                        {visibleMenus.includes("staff") && (
+                        {canView("staff") && (
                             <Menu.Item key="/staff">
                                 <NavLink to="/staff">
                                     <TeamOutlined />
@@ -93,7 +101,7 @@ export default function MainLayout() {
                                 </NavLink>
                             </Menu.Item>
                         )}
-                        {visibleMenus.includes("group") && (
+                        {canView("group") && (
                             <Menu.Item key="/role">
                                 <NavLink to="/role">
                                     <UsergroupAddOutlined />

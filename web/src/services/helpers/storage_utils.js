@@ -156,7 +156,16 @@ export default class StorageUtils {
      */
     static getVisibleMenus() {
         const authObj = StorageUtils.getStorageObj("auth");
-        const menu = authObj.visible_menus;
-        return menu ? menu : [];
+        return authObj.visible_menus || [];
+    }
+
+    /**
+     * getPermissions.
+     *
+     * @returns {string[]}
+     */
+    static getPermissions() {
+        const authObj = StorageUtils.getStorageObj("auth");
+        return authObj.permissions || {};
     }
 }
