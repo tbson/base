@@ -15,6 +15,7 @@ import {
 } from "@ant-design/icons";
 import { LOGO_TEXT } from "src/consts";
 import StorageUtils from "services/helpers/storage_utils";
+import PemUtils from "services/helpers/pem_utils";
 import NavUtils from "services/helpers/nav_utils";
 import LocaleSelect from "components/common/locale_select.jsx";
 import styles from "./styles.module.css";
@@ -35,16 +36,7 @@ export default function MainLayout() {
         setCollapsed(!collapsed);
     };
 
-    const permissions = StorageUtils.getPermissions();
     const logout = NavUtils.logout(navigate);
-
-    const canView = (menu) => {
-        try {
-            return permissions[menu].includes("view");
-        } catch (_e) {
-            return false;
-        }
-    };
 
     /**
      * processSelectedKey.
@@ -84,7 +76,7 @@ export default function MainLayout() {
                         </NavLink>
                     </Menu.Item>
 
-                    {canView("variable") && (
+                    {PemUtils.hasPermit("variable") && (
                         <Menu.Item key="/variable">
                             <NavLink to="/variable">
                                 <SettingFilled />
@@ -93,7 +85,7 @@ export default function MainLayout() {
                         </Menu.Item>
                     )}
                     <SubMenu key="company" icon={<GoldenFilled />} title={t`Company`}>
-                        {canView("staff") && (
+                        {PemUtils.hasPermit("staff") && (
                             <Menu.Item key="/staff">
                                 <NavLink to="/staff">
                                     <TeamOutlined />
@@ -101,7 +93,7 @@ export default function MainLayout() {
                                 </NavLink>
                             </Menu.Item>
                         )}
-                        {canView("group") && (
+                        {PemUtils.hasPermit("group") && (
                             <Menu.Item key="/role">
                                 <NavLink to="/role">
                                     <UsergroupAddOutlined />
