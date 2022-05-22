@@ -20,7 +20,7 @@ import NavUtils from "services/helpers/nav_utils";
 import LocaleSelect from "components/common/locale_select.jsx";
 import styles from "./styles.module.css";
 
-const { Header, Sider, Content } = Layout;
+const { Header, Footer, Sider, Content } = Layout;
 
 /**
  * MainLayout.
@@ -140,6 +140,7 @@ export default function MainLayout() {
                 <Content className="site-layout-content">
                     <Outlet />
                 </Content>
+                <Footer className="layout-footer">Copyright base.test 2022</Footer>
             </Layout>
         </Layout>
     );

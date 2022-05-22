@@ -32,3 +32,9 @@
 .wrapperContainer :global(.site-layout) :global(.site-layout-content) {
     background: #fff;
 }
+
+.wrapperContainer :global(.layout-footer) {
+    height: 34px;
+    padding: 5px 5px;
+    text-align: center;
+}
