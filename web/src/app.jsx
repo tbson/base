@@ -10,7 +10,7 @@ import ScrollToTop from "components/common/scroll_to_top";
 import Waiting from "components/common/waiting";
 import Spinner from "components/common/spinner";
 import BlankLayout from "components/common/layout/blank";
-import SideBarLayout from "components/common/layout/side_bar";
+import MainLayout from "components/common/layout/main";
 import Utils from "services/helpers/utils";
 import LocaleUtils from "services/helpers/locale_utils";
 
@@ -52,7 +52,7 @@ function Index() {
                         <Route path="/login/" element={<Login />} />
                     </Route>
                     <Route path="/" element={<PrivateRoute />}>
-                        <Route path="/" element={<SideBarLayout />}>
+                        <Route path="/" element={<MainLayout />}>
                             <Route path="/" element={<Profile />} />
                             <Route path="/staff" element={<Staff />} />
                             <Route path="/role" element={<Role />} />

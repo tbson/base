@@ -24,9 +24,9 @@ const { SubMenu } = Menu;
 const { Header, Sider, Content } = Layout;
 
 /**
- * SideBarLayout.
+ * MainLayout.
  */
-export default function SideBarLayout() {
+export default function MainLayout() {
     const navigate = useNavigate();
     const location = useLocation();
 
