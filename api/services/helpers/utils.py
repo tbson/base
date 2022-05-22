@@ -507,14 +507,12 @@ class Utils:
 
     @staticmethod
     def password_validate(password):
-        password_validate_message = _(
-            ", ".join(
-                [
-                    "Passwords must contain at least 8 characters in length",
-                    "a minimum of 1 uppercase letter",
-                    "a minimum of 1 numeric character",
-                ]
-            )
+        password_validate_message = ", ".join(
+            [
+                _("Passwords must contain at least 8 characters in length"),
+                _("a minimum of 1 uppercase letter"),
+                _("a minimum of 1 numeric character"),
+            ]
         )
         password = password.strip()
         errors = []

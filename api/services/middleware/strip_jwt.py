@@ -1,4 +1,5 @@
 import contextlib
+from django.utils import translation
 from rest_framework.permissions import AllowAny
 from services.helpers.token_utils import TokenUtils
 
@@ -11,6 +12,8 @@ class StripJWT:
         return self.get_response(request)
 
     def process_view(self, request, view_func, _view_args, _view_kwargs):
+        lang = request.headers.get("Accept-Language", "en")
+        translation.activate(lang)
         if request.headers.get("Authorization"):
             token = TokenUtils.get_token_from_headers(request.headers)
             bearer_token = f"bearer {token}"

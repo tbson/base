@@ -73,7 +73,8 @@ export default class RequestUtils {
             url,
             headers: {
                 Authorization: token ? `JWT ${token}` : undefined,
-                "Content-Type": contentType
+                "Content-Type": contentType,
+                "Accept-Language": StorageUtils.getStorageStr("locale")
             }
         };
         if (blobResponseType) {
