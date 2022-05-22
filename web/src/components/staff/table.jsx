@@ -34,7 +34,6 @@ export default function StaffTable() {
                 .then((resp) => {
                     setLinks(resp.data.links);
                     setList(Utils.appendKey(resp.data.items));
-                    console.log(resp.data.extra.options);
                     setStaffOptions(resp.data.extra.options);
                 })
                 .finally(() => {
