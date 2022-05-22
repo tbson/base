@@ -9,10 +9,13 @@ import {
     EditBtn,
     RemoveBtn
 } from "components/common/table/buttons";
+import PemCheck from "components/common/pem_check";
 import Utils from "services/helpers/utils";
 import RequestUtils from "services/helpers/request_utils";
 import Dialog from "./dialog";
 import { urls, labels, messages } from "./config";
+
+const PEM_GROUP = "variable";
 
 export default function VariableTable() {
     const [init, setInit] = useState(true);
@@ -97,8 +100,12 @@ export default function VariableTable() {
             width: 90,
             render: (_text, record) => (
                 <div className="flex-space">
-                    <EditBtn onClick={() => Dialog.toggle(true, record.id)} />
-                    <RemoveBtn onClick={() => onDelete(record.id)} />
+                    <PemCheck pem_group={PEM_GROUP} pem="change">
+                        <EditBtn onClick={() => Dialog.toggle(true, record.id)} />
+                    </PemCheck>
+                    <PemCheck pem_group={PEM_GROUP} pem="delete">
+                        <RemoveBtn onClick={() => onDelete(record.id)} />
+                    </PemCheck>
                 </div>
             )
         }
@@ -114,10 +121,14 @@ export default function VariableTable() {
         <div>
             <Row>
                 <Col span={12}>
-                    <RemoveSelectedBtn ids={ids} onClick={onBulkDelete} />
+                    <PemCheck pem_group={PEM_GROUP} pem="delete">
+                        <RemoveSelectedBtn ids={ids} onClick={onBulkDelete} />
+                    </PemCheck>
                 </Col>
                 <Col span={12} className="right">
-                    <AddNewBtn onClick={() => Dialog.toggle()} />
+                    <PemCheck pem_group={PEM_GROUP} pem="add">
+                        <AddNewBtn onClick={() => Dialog.toggle()} />
+                    </PemCheck>
                 </Col>
             </Row>
 
