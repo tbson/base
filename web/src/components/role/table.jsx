@@ -1,10 +1,14 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { t } from "ttag";
-import { Row, Col, Button, Table } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { Row, Col, Table } from "antd";
 import Pagination, { defaultLinks } from "components/common/table/pagination";
 import SearchInput from "components/common/table/search_input";
+import {
+    AddNewBtn,
+    RemoveSelectedBtn,
+    EditBtn,
+    RemoveBtn
+} from "components/common/table/buttons";
 import Utils from "services/helpers/utils";
 import RequestUtils from "services/helpers/request_utils";
 import Dialog from "./dialog";
@@ -83,24 +87,10 @@ export default function RoleTable() {
             fixed: "right",
             width: 90,
             render: (_text, record) => (
-                <span>
-                    <Button
-                        type="default"
-                        htmlType="button"
-                        icon={<EditOutlined />}
-                        size="small"
-                        onClick={() => Dialog.toggle(true, record.id)}
-                    />
-                    &nbsp;&nbsp;
-                    <Button
-                        danger
-                        type="default"
-                        htmlType="button"
-                        icon={<DeleteOutlined />}
-                        size="small"
-                        onClick={() => onDelete(record.id)}
-                    />
-                </span>
+                <div className="flex-space">
+                    <EditBtn onClick={() => Dialog.toggle(true, record.id)} />
+                    <RemoveBtn onClick={() => onDelete(record.id)} />
+                </div>
             )
         }
     ];
@@ -115,24 +105,10 @@ export default function RoleTable() {
         <div>
             <Row>
                 <Col span={12}>
-                    <Button
-                        type="primary"
-                        danger
-                        icon={<DeleteOutlined />}
-                        disabled={!ids.length}
-                        onClick={() => onBulkDelete(ids)}
-                    >
-                        {t`Remove selected`}
-                    </Button>
+                    <RemoveSelectedBtn ids={ids} onClick={onBulkDelete} />
                 </Col>
                 <Col span={12} className="right">
-                    <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => Dialog.toggle()}
-                    >
-                        {t`Add new`}
-                    </Button>
+                    <AddNewBtn onClick={() => Dialog.toggle()} />
                 </Col>
             </Row>
 

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Input } from "antd";
+import { t } from "ttag";
 const { Search } = Input;
 
 /**
@@ -19,7 +20,11 @@ export default function SearchInput({ show = true, onChange }) {
     if (!show) return null;
     return (
         <div>
-            <Search name="keyword" placeholder="Search..." onSearch={onChange} />
+            <Search
+                name="keyword"
+                placeholder={t`Search` + "..."}
+                onSearch={onChange}
+            />
         </div>
     );
 }

@@ -23,25 +23,25 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: src/components/common/layout/side_bar/index.jsx:75
+#: src/components/common/layout/main/index.jsx:83
 msgid "Profile"
 msgstr ""
 
-#: src/components/common/layout/side_bar/index.jsx:83
+#: src/components/common/layout/main/index.jsx:91
 #: src/components/variable/config.js:14
 msgid "Config"
 msgstr ""
 
-#: src/components/common/layout/side_bar/index.jsx:87
+#: src/components/common/layout/main/index.jsx:95
 msgid "Company"
 msgstr ""
 
-#: src/components/common/layout/side_bar/index.jsx:92
+#: src/components/common/layout/main/index.jsx:100
 #: src/components/staff/config.js:15
 msgid "Staff"
 msgstr ""
 
-#: src/components/common/layout/side_bar/index.jsx:100
+#: src/components/common/layout/main/index.jsx:108
 #: src/components/role/config.js:14
 msgid "Group"
 msgstr ""
@@ -117,9 +117,9 @@ msgstr ""
 msgid "Config value"
 msgstr ""
 
+#: src/components/common/table/buttons.jsx:9
 #: src/components/role/table.jsx:134
 #: src/components/staff/table.jsx:152
-#: src/components/variable/table.jsx:143
 #: src/services/helpers/utils.js:117
 msgid "Add new"
 msgstr ""
@@ -130,6 +130,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: src/components/common/table/buttons.jsx:30
 #: src/services/helpers/utils.js:117
 msgid "Update"
 msgstr ""
@@ -147,9 +148,9 @@ msgstr ""
 msgid "Do you want to remote these ${ name }?"
 msgstr ""
 
+#: src/components/common/table/buttons.jsx:23
 #: src/components/role/table.jsx:125
 #: src/components/staff/table.jsx:143
-#: src/components/variable/table.jsx:134
 msgid "Remove selected"
 msgstr ""
 
@@ -167,4 +168,12 @@ msgstr ""
 
 #: src/components/role/config.js:30
 msgid "Permissions"
+msgstr ""
+
+#: src/components/common/table/search_input.jsx:25
+msgid "Search"
+msgstr ""
+
+#: src/components/common/table/buttons.jsx:45
+msgid "Remove"
 msgstr ""

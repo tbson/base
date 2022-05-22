@@ -30,25 +30,25 @@ msgstr "Mật khẩu"
 msgid "Login"
 msgstr "Đăng nhập"
 
-#: src/components/common/layout/side_bar/index.jsx:75
+#: src/components/common/layout/main/index.jsx:83
 msgid "Profile"
 msgstr "Hồ sơ"
 
-#: src/components/common/layout/side_bar/index.jsx:83
+#: src/components/common/layout/main/index.jsx:91
 #: src/components/variable/config.js:14
 msgid "Config"
 msgstr "Cấu hình"
 
-#: src/components/common/layout/side_bar/index.jsx:87
+#: src/components/common/layout/main/index.jsx:95
 msgid "Company"
 msgstr "Công ty"
 
-#: src/components/common/layout/side_bar/index.jsx:92
+#: src/components/common/layout/main/index.jsx:100
 #: src/components/staff/config.js:15
 msgid "Staff"
 msgstr "Nhân viên"
 
-#: src/components/common/layout/side_bar/index.jsx:100
+#: src/components/common/layout/main/index.jsx:108
 #: src/components/role/config.js:14
 msgid "Group"
 msgstr "Nhóm"
@@ -123,8 +123,8 @@ msgstr "Tên cấu hình"
 msgid "Config value"
 msgstr "Giá trị cấu hình"
 
-#: src/components/role/table.jsx:134 src/components/staff/table.jsx:152
-#: src/components/variable/table.jsx:143 src/services/helpers/utils.js:117
+#: src/components/common/table/buttons.jsx:9 src/components/role/table.jsx:134
+#: src/components/staff/table.jsx:152 src/services/helpers/utils.js:117
 msgid "Add new"
 msgstr "Thêm mới"
 
@@ -134,7 +134,7 @@ msgstr "Thêm mới"
 msgid "Save"
 msgstr "Lưu"
 
-#: src/services/helpers/utils.js:117
+#: src/components/common/table/buttons.jsx:30 src/services/helpers/utils.js:117
 msgid "Update"
 msgstr "Cập nhật"
 
@@ -149,8 +149,8 @@ msgstr "Bạn có muốn xóa ${ name } này?"
 msgid "Do you want to remote these ${ name }?"
 msgstr "Bạn có muốn xóa những ${ name } này?"
 
-#: src/components/role/table.jsx:125 src/components/staff/table.jsx:143
-#: src/components/variable/table.jsx:134
+#: src/components/common/table/buttons.jsx:23 src/components/role/table.jsx:125
+#: src/components/staff/table.jsx:143
 msgid "Remove selected"
 msgstr "Xóa chọn"
 
@@ -169,3 +169,11 @@ msgstr "Tên nhóm"
 #: src/components/role/config.js:30
 msgid "Permissions"
 msgstr "Quyền"
+
+#: src/components/common/table/search_input.jsx:25
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: src/components/common/table/buttons.jsx:45
+msgid "Remove"
+msgstr "Xóa"
