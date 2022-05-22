@@ -44,20 +44,16 @@ class StaffViewSet(GenericViewSet):
 
     @action(methods=["post"], detail=True)
     def add(self, request):
-        serializer = StaffSr(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return ResUtils.res(serializer.data)
+        obj = StaffUtils.create_staff(request.data)
+        sr = StaffSr(obj)
+        return ResUtils.res(sr.data)
 
     @action(methods=["put"], detail=True)
     def change(self, request, pk=None):
         obj = get_object_or_404(Staff, pk=pk)
-        serializer = StaffSr(obj, partial=True, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return ResUtils.res(serializer.data)
+        obj = StaffUtils.update_staff(obj, request.data)
+        sr = StaffSr(obj)
+        return ResUtils.res(sr.data)
 
     @action(methods=["delete"], detail=True)
     def delete(self, request, pk=None):

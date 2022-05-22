@@ -44,9 +44,7 @@ class StaffUtils:
         user = UserUtils.create_user(data)
 
         # Create staff
-        staff_data = {
-            "user": user.pk,
-        }
+        staff_data = data | {"user": user.pk}
         sr = StaffSr(data=staff_data)
         sr.is_valid(raise_exception=True)
         return sr.save()

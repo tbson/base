@@ -1,6 +1,7 @@
 from django.db.models import QuerySet
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from services.helpers.utils import Utils
 from .srs import UserSr
 
 User = get_user_model()
@@ -9,6 +10,8 @@ User = get_user_model()
 class UserUtils:
     @staticmethod
     def create_user(data: dict) -> QuerySet:
+        if not data.get("password"):
+            data["password"] = Utils.get_random_number(12)
         sr = UserSr(data=data)
         sr.is_valid(raise_exception=True)
         user = sr.save()
