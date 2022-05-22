@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { useNavigate, useLocation, NavLink, Outlet } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { t } from "ttag";
 import { Layout, Menu, Row, Col } from "antd";
 import {
@@ -20,8 +20,6 @@ import NavUtils from "services/helpers/nav_utils";
 import LocaleSelect from "components/common/locale_select.jsx";
 import styles from "./styles.module.css";
 
-const { SubMenu } = Menu;
-
 const { Header, Sider, Content } = Layout;
 
 /**
@@ -37,6 +35,7 @@ export default function MainLayout() {
     };
 
     const logout = NavUtils.logout(navigate);
+    const navigateTo = NavUtils.navigateTo(navigate);
 
     /**
      * processSelectedKey.
@@ -47,6 +46,41 @@ export default function MainLayout() {
     function processSelectedKey(pathname) {
         if (pathname.startsWith("/staff")) return "/staff";
         return pathname;
+    }
+
+    function getMenuItems() {
+        const result = [];
+
+        result.push({ label: t`Profile`, key: "/", icon: <UserOutlined /> });
+
+        PemUtils.canView("variable") &&
+            result.push({
+                label: t`Config`,
+                key: "/variable",
+                icon: <SettingFilled />
+            });
+
+        if (PemUtils.canView(["staff", "group"])) {
+            const companyGroup = {
+                label: t`Company`,
+                icon: <GoldenFilled />,
+                children: []
+            };
+            PemUtils.canView("staff") &&
+                companyGroup.children.push({
+                    label: t`Staff`,
+                    key: "/staff",
+                    icon: <TeamOutlined />
+                });
+            PemUtils.canView("group") &&
+                companyGroup.children.push({
+                    label: t`Group`,
+                    key: "/role",
+                    icon: <UsergroupAddOutlined />
+                });
+            result.push(companyGroup);
+        }
+        return result;
     }
 
     return (
@@ -64,45 +98,12 @@ export default function MainLayout() {
                 <div className="logo">{collapsed || LOGO_TEXT}</div>
                 <Menu
                     className="sidebar-nav"
-                    selectedKeys={[processSelectedKey(location.pathname)]}
+                    defaultSelectedKeys={[processSelectedKey(location.pathname)]}
                     theme="dark"
                     mode="inline"
-                    defaultOpenKeys={["company"]}
-                >
-                    <Menu.Item key="/">
-                        <NavLink to="/">
-                            <UserOutlined />
-                            <MenuLabel collapsed={collapsed} label={t`Profile`} />
-                        </NavLink>
-                    </Menu.Item>
-
-                    {PemUtils.hasPermit("variable") && (
-                        <Menu.Item key="/variable">
-                            <NavLink to="/variable">
-                                <SettingFilled />
-                                <MenuLabel collapsed={collapsed} label={t`Config`} />
-                            </NavLink>
-                        </Menu.Item>
-                    )}
-                    <SubMenu key="company" icon={<GoldenFilled />} title={t`Company`}>
-                        {PemUtils.hasPermit("staff") && (
-                            <Menu.Item key="/staff">
-                                <NavLink to="/staff">
-                                    <TeamOutlined />
-                                    <MenuLabel collapsed={collapsed} label={t`Staff`} />
-                                </NavLink>
-                            </Menu.Item>
-                        )}
-                        {PemUtils.hasPermit("group") && (
-                            <Menu.Item key="/role">
-                                <NavLink to="/role">
-                                    <UsergroupAddOutlined />
-                                    <MenuLabel collapsed={collapsed} label={t`Group`} />
-                                </NavLink>
-                            </Menu.Item>
-                        )}
-                    </SubMenu>
-                </Menu>
+                    items={getMenuItems()}
+                    onSelect={({ key }) => navigateTo(key)}
+                />
             </Sider>
             <Layout className="site-layout">
                 <Header className="site-layout-header" style={{ padding: 0 }}>
@@ -142,17 +143,4 @@ export default function MainLayout() {
             </Layout>
         </Layout>
     );
-}
-
-/**
- * MenuLabel.
- *
- * @param {Object} props
- * @param {boolean} props.collapsed
- * @param {string} props.label
- * @returns {ReactElement}
- */
-function MenuLabel({ collapsed, label }) {
-    if (collapsed) return null;
-    return <span>&nbsp;{label}</span>;
 }
