@@ -15,7 +15,7 @@ class StaffUtils:
 
         def get_data(i: int) -> dict:
             phone_number = f"+849066965{i}" if i >= 10 else f"+8490669652{i}"
-            test_password = "SamplePassword123!@#"
+            test_password = UserUtils.get_default_test_pwd()
             data = {
                 "email": f"test{i}@gmail.com",
                 "phone_number": phone_number,
@@ -56,10 +56,8 @@ class StaffUtils:
     def update_staff(staff: QuerySet, data: dict) -> QuerySet:
         user = UserUtils.update_user(staff.user, data)
 
-        # Create staff
-        staff_data = {
-            "user": user.pk,
-        }
+        # Update staff
+        staff_data = data | {"user": user.pk}
         sr = StaffSr(staff, data=staff_data, partial=True)
         sr.is_valid(raise_exception=True)
         return sr.save()

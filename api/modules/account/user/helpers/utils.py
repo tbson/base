@@ -9,6 +9,10 @@ User = get_user_model()
 
 class UserUtils:
     @staticmethod
+    def get_default_test_pwd():
+        return "SamplePassword123!@#"
+
+    @staticmethod
     def create_user(data: dict) -> QuerySet:
         if not data.get("password"):
             data["password"] = Utils.get_random_number(12)

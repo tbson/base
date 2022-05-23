@@ -1,7 +1,7 @@
 import json
 from rest_framework.test import APIClient
 from django.test import TestCase
-from services.helpers.utils import Utils
+from modules.account.user.helpers.utils import UserUtils
 from modules.account.staff.helpers.utils import StaffUtils
 from modules.noti.verif.helpers.utils import VerifUtils
 
@@ -11,14 +11,12 @@ class StaffTestCase(TestCase):
         self.client = APIClient()
         self.anonClient = APIClient()
         self.base_url = "/api/v1/account/user/"
-        self.profile_base_url = "/api/v1/account/staff/profile/"
 
     def test_reset_password(self):
         staff = StaffUtils.seeding(1, True)
         data = {
             "username": staff.user.username,
         }
-
         # Step 1 -> request OTP
         resp = self.client.post(
             f"{self.base_url}reset-password/",
@@ -82,20 +80,28 @@ class StaffTestCase(TestCase):
         staff = StaffUtils.seeding(1, True)
         self.client.force_authenticate(user=staff.user)
 
-        data = {
-            "old_password": "Qwerty!@#456",
+        success_data = {
+            "old_password": UserUtils.get_default_test_pwd(),
             "password": "Qwerty!@#456789",
+            "password_confirm": "Qwerty!@#456789",
         }
 
-        wrong_data = {
-            "old_password": "password",
+        not_match_data = {
+            "old_password": UserUtils.get_default_test_pwd(),
             "password": "Qwerty!@#456789",
+            "password_confirm": "password",
         }
 
-        # Step 0 -> wrong password
+        wrong_old_pwd_data = {
+            "old_password": "hello",
+            "password": "Qwerty!@#456789",
+            "password_confirm": "Qwerty!@#456789",
+        }
+
+        # Step 0 -> password not match
         resp = self.client.post(
             f"{self.base_url}change-password/",
-            json.dumps(wrong_data),
+            json.dumps(not_match_data),
             content_type="application/json",
         )
 
@@ -106,22 +112,37 @@ class StaffTestCase(TestCase):
             resp["password_confirm"], "Password and confirm password didn't match"
         )
 
-        # Step 1 -> change
+        # Step 0.1 -> wrong old password
         resp = self.client.post(
             f"{self.base_url}change-password/",
-            json.dumps(data),
+            json.dumps(wrong_old_pwd_data),
             content_type="application/json",
         )
 
         status_code = resp.status_code
-        self.assertEqual(status_code, 200)
+        self.assertEqual(status_code, 400)
         resp = resp.json()
+        self.assertEqual(resp["old_password"], "Incorrect current password")
+
+        # Step 1 -> change
+        resp = self.client.post(
+            f"{self.base_url}change-password/",
+            json.dumps(success_data),
+            content_type="application/json",
+        )
+
+        status_code = resp.status_code
+        resp = resp.json()
+
+        self.assertEqual(status_code, 200)
         self.assertEqual(resp, {})
 
         # Step 2 -> login
         resp = self.client.post(
             f"{self.base_url}login/",
-            json.dumps({"username": staff.user.username, "password": data["password"]}),
+            json.dumps(
+                {"username": staff.user.username, "password": success_data["password"]}
+            ),
             content_type="application/json",
         )
 
@@ -129,49 +150,3 @@ class StaffTestCase(TestCase):
         self.assertEqual(status_code, 200)
         resp = resp.json()
         self.assertTrue("token" in resp)
-
-    def test_view_profile(self):
-        staff_data = StaffUtils.seeding(1, True, False)
-        staff = StaffUtils.seeding(1, True)
-
-        # Before authenticate
-        resp = self.anonClient.get(self.profile_base_url)
-        self.assertEqual(resp.status_code, 401)
-
-        # After authenticate
-        self.client.force_authenticate(user=staff.user)
-        resp = self.client.get(self.profile_base_url)
-
-        status_code = resp.status_code
-        self.assertEqual(status_code, 200)
-        resp = resp.json()
-        self.assertEqual(resp["email"], staff_data["email"])
-
-    def test_update_profile(self):
-        staff = StaffUtils.seeding(1, True)
-
-        data = {"phone_number": "0906696555"}
-
-        # Before authenticate
-        resp = self.anonClient.put(
-            self.profile_base_url,
-            json.dumps(data),
-            content_type="application/json",
-        )
-
-        self.assertEqual(resp.status_code, 401)
-
-        # After authenticate
-        self.client.force_authenticate(user=staff.user)
-        resp = self.client.put(
-            self.profile_base_url,
-            json.dumps(data),
-            content_type="application/json",
-        )
-
-        status_code = resp.status_code
-        resp = resp.json()
-        self.assertEqual(status_code, 200)
-        self.assertEqual(
-            resp["phone_number"], Utils.phone_to_canonical_format(data["phone_number"])
-        )

@@ -527,13 +527,8 @@ class Utils:
         return []
 
     @staticmethod
-    def digit_to_bool(in_history: str) -> bool:
-        in_history = in_history
-        if not in_history:
-            return False
-        if in_history in {"0", "1"}:
-            return bool(int(in_history))
-        return False
+    def to_bool(input_value) -> bool:
+        return input_value not in [0, "0", "", False, "False", "false", "FALSE", None]
 
     @staticmethod
     def date_str_strip_millisecs(input_str: str) -> str:

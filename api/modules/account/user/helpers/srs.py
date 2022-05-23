@@ -20,15 +20,20 @@ class UserSr(ModelSerializer):
     )
 
     def to_internal_value(self, data):
-        phone_number = data.get("phone_number")
-        phone_number = Utils.phone_to_canonical_format(phone_number)
-        if not phone_number:
-            phone_number = None
-        data["phone_number"] = phone_number
-        data["username"] = data.get("email")
+        if "phone_number" in data:
+            phone_number = data.get("phone_number")
+            phone_number = Utils.phone_to_canonical_format(phone_number)
+            if not phone_number:
+                phone_number = None
+            data["phone_number"] = phone_number
+
+        if "email" in data:
+            email = data.get("email").lower()
+            data["username"] = email
+            data["email"] = email
 
         if "password" in data:
-            data["password"] = make_password(data["password"])
+            data["password"] = make_password(data.get("password"))
 
         return super().to_internal_value(data)
 

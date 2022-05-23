@@ -94,50 +94,50 @@ class PasswordValidate(SimpleTestCase):
 class DigitToBool(SimpleTestCase):
     def test_happy_case_str_0(self):
         input_data = "0"
-        output = Utils.digit_to_bool(input_data)
+        output = Utils.to_bool(input_data)
         eput = False
         self.assertEqual(output, eput)
 
     def test_happy_case_str_1(self):
         input_data = "1"
-        output = Utils.digit_to_bool(input_data)
+        output = Utils.to_bool(input_data)
         eput = True
         self.assertEqual(output, eput)
 
     def test_happy_case_int_0(self):
         input_data = 0
-        output = Utils.digit_to_bool(input_data)
+        output = Utils.to_bool(input_data)
         eput = False
         self.assertEqual(output, eput)
 
     def test_happy_case_int_1(self):
         input_data = 1
-        output = Utils.digit_to_bool(input_data)
+        output = Utils.to_bool(input_data)
         eput = True
         self.assertEqual(output, eput)
 
     def test_none(self):
         input_data = None
-        output = Utils.digit_to_bool(input_data)
+        output = Utils.to_bool(input_data)
         eput = False
         self.assertEqual(output, eput)
 
     def test_empty_string(self):
         input_data = ""
-        output = Utils.digit_to_bool(input_data)
+        output = Utils.to_bool(input_data)
         eput = False
         self.assertEqual(output, eput)
 
     def test_other_string(self):
         input_data = "hello"
-        output = Utils.digit_to_bool(input_data)
-        eput = False
+        output = Utils.to_bool(input_data)
+        eput = True
         self.assertEqual(output, eput)
 
     def test_other_int(self):
         input_data = 3
-        output = Utils.digit_to_bool(input_data)
-        eput = False
+        output = Utils.to_bool(input_data)
+        eput = True
         self.assertEqual(output, eput)
 
 

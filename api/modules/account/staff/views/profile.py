@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from services.helpers.utils import Utils
 from services.helpers.res_utils import ResUtils
 from ..helpers.srs import StaffSr
+from ..helpers.utils import StaffUtils
 
 
 class ProfileView(APIView):
@@ -22,8 +23,6 @@ class ProfileView(APIView):
         data = {}
         if phone_number := request.data.get("phone_number", None):
             data = dict(phone_number=Utils.phone_to_canonical_format(phone_number))
-        serializer = StaffSr(staff, partial=True, data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        resp = serializer.data
-        return ResUtils.res(resp)
+        staff = StaffUtils.update_staff(staff, data)
+        sr = StaffSr(staff)
+        return ResUtils.res(sr.data)

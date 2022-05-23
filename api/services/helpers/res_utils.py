@@ -47,13 +47,10 @@ class ResUtils:
             "verif",
             "veriflog",
         ]
-        queryset = (
-            Permission.objects.all()
-            if user.is_staff
-            else Permission.objects.filter(
-                groups__in=user.groups.values_list("id", flat=True)
-            ).distinct()
-        )
+        group_ids = user.groups.values_list("id", flat=True)
+        queryset = Permission.objects.all()
+        if user.is_staff:
+            queryset = Permission.objects.filter(groups__in=group_ids).distinct()
         list_item = queryset.values_list("codename", flat=True)
         result = {}
         for item in list_item:
