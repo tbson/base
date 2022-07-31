@@ -17,7 +17,7 @@ Only use really needed one
 
 *Dev Dependencies*
 - `@vitejs/plugin-react`: Vite plugin for react development,
-- `jest`: For unit testing,
+- `vitest`: For unit testing,
 - `ttag-cli`: CLI for ttag use for generating, updating, exporting gettext files
 - `vite`: Frontend tooling, fast build and hot reloading
 
