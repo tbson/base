@@ -1,7 +1,7 @@
 import { atom } from "recoil";
-import LocaleUtils from "services/helpers/locale_utils";
+import LocaleUtil from "service/helper/locale_util";
 
 export const localeSt = atom({
     key: "locale",
-    default: LocaleUtils.getLocale()
+    default: LocaleUtil.getLocale()
 });

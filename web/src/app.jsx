@@ -4,17 +4,17 @@ import { RecoilRoot, useRecoilState } from "recoil";
 import { useLocale } from "ttag";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { localeSt } from "src/states";
-import PrivateRoute from "components/common/route/private_route.jsx";
-import NotMatch from "components/common/route/not_match";
-import ScrollToTop from "components/common/scroll_to_top";
-import Waiting from "components/common/waiting";
-import Spinner from "components/common/spinner";
-import BlankLayout from "components/common/layout/blank";
-import MainLayout from "components/common/layout/main";
-import Utils from "services/helpers/utils";
-import LocaleUtils from "services/helpers/locale_utils";
+import PrivateRoute from "component/common/route/private_route.jsx";
+import NotMatch from "component/common/route/not_match";
+import ScrollToTop from "component/common/scroll_to_top";
+import Waiting from "component/common/waiting";
+import Spinner from "component/common/spinner";
+import BlankLayout from "component/common/layout/blank";
+import MainLayout from "component/common/layout/main";
+import Util from "service/helper/util";
+import LocaleUtil from "service/helper/locale_util";
 
-Utils.responseIntercept();
+Util.responseIntercept();
 const lazyImport = (Component) => (props) => {
     return (
         <React.Suspense fallback={<Waiting />}>
@@ -23,20 +23,20 @@ const lazyImport = (Component) => (props) => {
     );
 };
 
-const Login = lazyImport(lazy(() => import("components/auth/login")));
-const Profile = lazyImport(lazy(() => import("components/auth/profile")));
-const Staff = lazyImport(lazy(() => import("components/staff")));
-const Role = lazyImport(lazy(() => import("components/role")));
-const Variable = lazyImport(lazy(() => import("components/variable")));
+const Login = lazyImport(lazy(() => import("component/auth/login")));
+const Profile = lazyImport(lazy(() => import("component/auth/profile")));
+const Staff = lazyImport(lazy(() => import("component/staff")));
+const Role = lazyImport(lazy(() => import("component/role")));
+const Variable = lazyImport(lazy(() => import("component/variable")));
 
 function Index() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [locale, setLocale] = useRecoilState(localeSt);
     useLocale(locale);
     useEffect(() => {
-        LocaleUtils.fetchLocales().then(() => {
+        LocaleUtil.fetchLocales().then(() => {
             setDataLoaded(true);
-            setLocale(LocaleUtils.setLocale(locale));
+            setLocale(LocaleUtil.setLocale(locale));
         });
     }, []);
     if (!dataLoaded) {
