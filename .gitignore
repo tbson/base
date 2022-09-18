@@ -13,7 +13,7 @@ docker/.env
 docker/db_backup/*.sql
 
 __pycache__
-api/logs/*.log
+api/log/*.log
 api/.coverage
 api/.elixir_ls/
 api/public/static

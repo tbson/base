@@ -49,18 +49,18 @@ REQUIRED_APPS = [
 ]
 
 PROJECT_APPS = [
-    "services.custom_command",
-    "modules.noti.verif",
-    "modules.account.user",
-    "modules.account.staff",
-    "modules.account.role",
-    "modules.configuration.variable",
+    "module.custom_cmd",
+    "module.noti.verif",
+    "module.account.user",
+    "module.account.staff",
+    "module.account.role",
+    "module.conf.variable",
 ]
 
 INSTALLED_APPS = REQUIRED_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
-    "services.middleware.strip_jwt.StripJWT",
+    "service.framework.middleware.strip_jwt.StripJWT",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -85,7 +85,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "services.context_processors.template_global.global_vars",
             ],
         },
     },
@@ -184,7 +183,7 @@ LOGGING["formatters"]["verbose"] = {
 LOGGING["handlers"]["error_logfile"] = {
     "level": "ERROR",
     "class": "logging.FileHandler",
-    "filename": os.path.join(BASE_DIR, "logs", "error.log"),
+    "filename": os.path.join(BASE_DIR, "log", "error.log"),
     "formatter": "verbose",
 }
 LOGGING["loggers"]["django"] = {
@@ -198,7 +197,7 @@ for log_type in LOG_TYPES:
     LOGGING["handlers"][handler] = {
         "level": "DEBUG",
         "class": "logging.FileHandler",
-        "filename": os.path.join(BASE_DIR, "logs", f"{log_type}.log"),
+        "filename": os.path.join(BASE_DIR, "log", f"{log_type}.log"),
     }
     LOGGING["loggers"][f"custom_{log_type}"] = {
         "handlers": [handler],
@@ -217,7 +216,7 @@ SIMPLE_JWT = {
 }
 
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": "services.drf_classes.custom_pagination.CustomPagination",
+    "DEFAULT_PAGINATION_CLASS": "service.framework.drf_class.custom_pagination.CustomPagination",
     "PAGE_SIZE": 15,
     "NON_FIELD_ERRORS_KEY": "detail",
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
