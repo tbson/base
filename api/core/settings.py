@@ -239,7 +239,7 @@ EMAIL_ENABLE = os.environ.get("EMAIL_ENABLE") == "true"
 PROTOCOL = os.environ.get("PROTOCOL")
 PORT = os.environ.get("PORT")
 DOMAIN = os.environ.get("DOMAIN")
-if PORT and int(PORT) not in [80, 442]:
+if PORT and int(PORT) not in [80, 443]:
     DOMAIN = f"{DOMAIN}:{PORT}"
 CSRF_TRUSTED_ORIGINS = [f"{PROTOCOL}://{DOMAIN}"]
 
