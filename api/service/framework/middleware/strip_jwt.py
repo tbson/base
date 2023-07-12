@@ -1,5 +1,5 @@
 import contextlib
-from service.framework_service import translation
+from django.utils import translation
 from rest_framework.permissions import AllowAny
 from service.token_service import TokenService
 

@@ -1,7 +1,7 @@
 import uuid
 import random
 import math
-from service.framework_service import slugify
+from django.utils.text import slugify
 
 
 class StringService:

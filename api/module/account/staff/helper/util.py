@@ -1,5 +1,5 @@
+from django.contrib.auth.models import Group, Permission
 from custom_type import query_set, query_obj
-from service.framework_service import Group, Permission
 from module.account.helper.sr import GroupSr
 from module.account.staff.models import Staff
 from module.account.staff.helper.sr import StaffSr
@@ -9,6 +9,7 @@ from module.account.user.helper.util import UserUtil
 class StaffUtil:
     @staticmethod
     def seeding(index: int, single: bool = False, save: bool = True) -> query_set:
+        # sourcery skip: raise-specific-error
 
         if index == 0:
             raise Exception("Indext must be start with 1.")
@@ -24,7 +25,7 @@ class StaffUtil:
                 "password": test_password,
             }
 
-            if save is False:
+            if not save:
                 return data
 
             try:
@@ -40,7 +41,7 @@ class StaffUtil:
         def get_list_data(index):
             return [get_data(i) for i in range(1, index + 1)]
 
-        return get_data(index) if single is True else get_list_data(index)
+        return get_data(index) if single else get_list_data(index)
 
     @staticmethod
     def create_staff(data: dict) -> query_obj:

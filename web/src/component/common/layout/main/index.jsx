@@ -95,15 +95,19 @@ export default function MainLayout() {
                     setCollapsed(broken);
                 }}
             >
-                <div className="logo">{collapsed || LOGO_TEXT}</div>
-                <Menu
-                    className="sidebar-nav"
-                    defaultSelectedKeys={[processSelectedKey(location.pathname)]}
-                    theme="dark"
-                    mode="inline"
-                    items={getMenuItems()}
-                    onSelect={({ key }) => navigateTo(key)}
-                />
+                <div className="sider">
+                    <div className="logo">
+                        <div className="logo-text">{collapsed || LOGO_TEXT}</div>
+                    </div>
+                    <Menu
+                        className="sidebar-nav"
+                        defaultSelectedKeys={[processSelectedKey(location.pathname)]}
+                        theme="dark"
+                        mode="inline"
+                        items={getMenuItems()}
+                        onSelect={({ key }) => navigateTo(key)}
+                    />
+                </div>
             </Sider>
             <Layout className="site-layout">
                 <Header className="site-layout-header" style={{ padding: 0 }}>
@@ -118,7 +122,6 @@ export default function MainLayout() {
                             )}
                         </Col>
                         <Col span={12} className="right" style={{ paddingRight: 20 }}>
-                            <LocaleSelect />
                             <span
                                 onClick={logout}
                                 onKeyDown={() => {}}
@@ -140,7 +143,11 @@ export default function MainLayout() {
                 <Content className="site-layout-content">
                     <Outlet />
                 </Content>
-                <Footer className="layout-footer">Copyright base.test 2022</Footer>
+                <Footer className="layout-footer">
+                    <div className="layout-footer-text">
+                        Copyright basecode.test 2023
+                    </div>
+                </Footer>
             </Layout>
         </Layout>
     );

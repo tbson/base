@@ -1,5 +1,5 @@
 from django.db import models
-from service.framework_service import _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 

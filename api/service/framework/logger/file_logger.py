@@ -1,7 +1,7 @@
 import contextlib
 import logging
 import inspect
-from service.framework_service import settings
+from django.conf import settings
 
 
 class FileLogger:

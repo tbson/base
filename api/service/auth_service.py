@@ -1,6 +1,7 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password, check_password
 from rest_framework_simplejwt.serializers import TokenVerifySerializer
 from rest_framework_simplejwt.settings import api_settings
-from service.framework_service import get_user_model, make_password, check_password
 from custom_type import query_obj
 
 User = get_user_model()

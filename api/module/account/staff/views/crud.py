@@ -18,7 +18,12 @@ class StaffViewSet(GenericViewSet):
     _name = "staff"
     permission_classes = (CustomPermission,)
     serializer_class = StaffSr
-    search_fields = ["email", "phone_number", "first_name", "last_name"]
+    search_fields = (
+        "user__email",
+        "user__phone_number",
+        "user__first_name",
+        "user__last_name",
+    )
 
     def list(self, request):
         queryset = Staff.objects.all()

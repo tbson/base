@@ -1,6 +1,6 @@
 import contextlib
 from django.contrib.auth.hashers import make_password, check_password
-from service.framework_service import _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
 from rest_framework.views import APIView

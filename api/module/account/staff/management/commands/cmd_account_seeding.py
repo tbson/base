@@ -3,6 +3,7 @@ from django.db import transaction
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
+from django.conf import settings
 from module.conf.variable.helper.util import VariableUtil
 from module.account.staff.helper.util import StaffUtil
 
@@ -15,7 +16,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS("Start..."))
-        password = "SamplePassword123!@#"
+        password = settings.SAMPLE_PASSWORD
         # Create super user
         with contextlib.suppress(Exception):
             user = User.objects.create_user(

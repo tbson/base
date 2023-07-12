@@ -1,5 +1,6 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from custom_type import query_obj
-from service.framework_service import get_user_model, Group
 from service.string_service import StringService
 from .sr import UserSr
 

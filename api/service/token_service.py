@@ -1,7 +1,7 @@
 from typing import Union
+from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-from service.framework_service import get_user_model
 from custom_type import query_obj
 
 User = get_user_model()

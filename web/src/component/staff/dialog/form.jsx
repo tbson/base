@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useRef, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { Form, Input } from "antd";
 import Util from "service/helper/util";
@@ -26,6 +27,7 @@ const formName = "StaffForm";
  * @param {Object} props.formRef
  */
 export default function StaffForm({ data, onChange }) {
+    const inputRef = useRef(null);
     const [form] = Form.useForm();
     const staffOptions = useRecoilValue(staffOptionsSt);
 
@@ -64,6 +66,10 @@ export default function StaffForm({ data, onChange }) {
         }
     };
 
+    useEffect(() => {
+        inputRef.current.focus({ cursor: "end" });
+    }, []);
+
     return (
         <Form
             form={form}
@@ -78,7 +84,7 @@ export default function StaffForm({ data, onChange }) {
             }
         >
             <Form.Item {...formAttrs.email}>
-                <Input />
+                <Input ref={inputRef}/>
             </Form.Item>
             <Form.Item {...formAttrs.phone_number}>
                 <Input />

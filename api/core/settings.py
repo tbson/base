@@ -266,3 +266,5 @@ CLIENT_URL = "/public/clients/front/"
 
 # Image configs
 IMAGE_MAX_WIDTH = 1200
+
+SAMPLE_PASSWORD = os.environ.get("SAMPLE_PASSWORD")

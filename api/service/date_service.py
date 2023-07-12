@@ -1,7 +1,7 @@
 import pytz
 import contextlib
 from datetime import date, datetime, timedelta
-from service.framework_service import settings
+from django.conf import settings
 
 MONTH_MAP = {
     1: 1,

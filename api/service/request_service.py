@@ -1,8 +1,11 @@
-from custom_type import query_set
-from service.framework_service import _, settings, HttpResponse, Permission
+from django.conf import settings
+from django.http import HttpResponse
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import Permission
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.serializers import ValidationError
+from custom_type import query_set
 from service.token_service import TokenService
 from service.date_service import DateService
 

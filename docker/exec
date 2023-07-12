@@ -8,7 +8,7 @@ shift
 ARGS="$@"
 
 docker_down () {
-    COMPOSE_HTTP_TIMEOUT=512 docker compose down
+    COMPOSE_HTTP_TIMEOUT=512 docker compose down --volumes
 }
 
 docker_up () {

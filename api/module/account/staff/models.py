@@ -1,5 +1,5 @@
 from django.db import models
-from service.framework_service import settings
+from django.conf import settings
 
 from service.framework.model.timestamped_model import TimeStampedModel
 

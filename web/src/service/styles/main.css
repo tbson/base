@@ -1,3 +1,9 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
 #loading-screen {
     display: none;
 }
@@ -92,6 +98,10 @@ table.styled-table {
     border-collapse: collapse;
     width: 100%;
     border: 1px solid #ddd;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f6f6f6;
 }
 
 .styled-table th,

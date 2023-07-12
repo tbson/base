@@ -54,6 +54,8 @@ services:
             - EMAIL_HOST_USER=${EMAIL_HOST_USER}
             - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
             - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+
+            - SAMPLE_PASSWORD=${SAMPLE_PASSWORD}
         depends_on:
             base_db:
                 condition: service_healthy

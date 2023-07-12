@@ -1,4 +1,4 @@
-from service.framework_service import QuerySet
+from django.db.models import QuerySet
 
 query_set = QuerySet
 query_obj = QuerySet

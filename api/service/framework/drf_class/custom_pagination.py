@@ -1,5 +1,5 @@
 from math import ceil
-from service.framework_service import settings
+from django.conf import settings
 from rest_framework import pagination
 from rest_framework.response import Response
 

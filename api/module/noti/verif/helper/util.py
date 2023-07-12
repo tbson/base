@@ -1,8 +1,7 @@
-from typing import List
 from datetime import datetime, timedelta
-from service.framework_service import _
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from django.template.loader import render_to_string
-from service.framework_service import settings
 from service.request_service import RequestService
 from service.email_service import EmailService
 from service.string_service import StringService
@@ -45,7 +44,7 @@ class VerifUtil:
         EmailService.send_email_async(subject, body, to_email)
 
     @staticmethod
-    def create(ips: List[str], target: str, lang: str = "vi"):
+    def create(ips: list[str], target: str, lang: str = "vi"):
         try:
             in_whitelist = VerifUtil.in_whitelist(target)
 
@@ -71,7 +70,7 @@ class VerifUtil:
             return (False, VerifUtil.get_error_message())
 
     @staticmethod
-    def create_again(ips: List[str], uid: str, lang: str = "vi"):
+    def create_again(ips: list[str], uid: str, lang: str = "vi"):
         error_message = _("Can not send OTP, please try again after 90 seconds")
 
         if not uid:
@@ -137,7 +136,7 @@ class VerifUtil:
             return False
 
     @staticmethod
-    def write_log(ips: List[str], target: str):
+    def write_log(ips: list[str], target: str):
         end_date = datetime.now()
         start_date = end_date - timedelta(days=1)
 
