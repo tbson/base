@@ -84,5 +84,6 @@ services:
             - ../api/public/:/resource/public
         ports:
             - "443:443"
+            - "80:80"
         depends_on:
             - base_api
