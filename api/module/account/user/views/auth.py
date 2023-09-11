@@ -75,7 +75,7 @@ class ResetPasswordView(APIView):
 
         default_response = RequestService.res(
             {
-                "verif_id": RequestService.get_uuid(),
+                "verif_id": StringService.get_uuid(),
                 "username": StringService.apply_mask(username),
             }
         )
