@@ -92,6 +92,9 @@ class RequestService:
 
     @staticmethod
     def error_format(data):
+        # Instance of string
+        if hasattr(data, "capitalize"):
+            data = str(data)
         if isinstance(data, str):
             return {"detail": data}
         return data if isinstance(data, dict) else {}
