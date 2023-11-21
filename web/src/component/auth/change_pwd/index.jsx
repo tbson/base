@@ -1,13 +1,13 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { t } from "ttag";
-import { Modal } from "antd";
-import Util from "service/helper/util";
-import Form from "./form";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { t } from 'ttag';
+import { Modal } from 'antd';
+import Util from 'service/helper/util';
+import Form from './form';
 
 export class Service {
     static get toggleEvent() {
-        return "TOGGLE_CHANGE_PASSWORD_DIALOG";
+        return 'TOGGLE_CHANGE_PASSWORD_DIALOG';
     }
 
     static toggle(open = true) {
@@ -34,8 +34,8 @@ export default function ChangePwd() {
             keyboard={false}
             maskClosable={false}
             destroyOnClose
-            visible={open}
-            okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
+            open={open}
+            okButtonProps={{ form: Form.formName, key: 'submit', htmlType: 'submit' }}
             okText={t`Change password`}
             onCancel={() => Service.toggle(false)}
             cancelText={t`Cancel`}
@@ -50,5 +50,5 @@ export default function ChangePwd() {
     );
 }
 
-ChangePwd.displayName = "ChangePwd";
+ChangePwd.displayName = 'ChangePwd';
 ChangePwd.toggle = Service.toggle;

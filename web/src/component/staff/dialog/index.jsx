@@ -1,15 +1,15 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { t } from "ttag";
-import { Modal } from "antd";
-import Util from "service/helper/util";
-import RequestUtil from "service/helper/request_util";
-import Form from "./form";
-import { urls, messages } from "../config";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { t } from 'ttag';
+import { Modal } from 'antd';
+import Util from 'service/helper/util';
+import RequestUtil from 'service/helper/request_util';
+import Form from './form';
+import { urls, messages } from '../config';
 
 export class Service {
     static get toggleEvent() {
-        return "TOGGLE_STAFF_DIALOG";
+        return 'TOGGLE_STAFF_DIALOG';
     }
 
     static toggle(open = true, id = 0) {
@@ -57,8 +57,8 @@ export default function StaffDialog({ onChange }) {
             keyboard={false}
             maskClosable={false}
             destroyOnClose
-            visible={open}
-            okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
+            open={open}
+            okButtonProps={{ form: Form.formName, key: 'submit', htmlType: 'submit' }}
             okText={t`Save`}
             onCancel={() => Service.toggle(false)}
             cancelText={t`Cancel`}
@@ -76,5 +76,5 @@ export default function StaffDialog({ onChange }) {
     );
 }
 
-StaffDialog.displayName = "StaffDialog";
+StaffDialog.displayName = 'StaffDialog';
 StaffDialog.toggle = Service.toggle;

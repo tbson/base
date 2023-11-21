@@ -8,23 +8,23 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "antd": "5.9.0",
-        "axios": "1.5.0",
+        "antd": "5.11.2",
+        "axios": "1.6.2",
         "date-fns": "^2.30.0",
-        "ramda": "0.29.0",
-        "rc-util": "^5.37.0",
+        "ramda": "0.29.1",
+        "rc-util": "^5.38.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-router-dom": "6.15.0",
+        "react-router-dom": "6.19.0",
         "recoil": "0.7.7",
-        "ttag": "^1.7.24"
+        "ttag": "^1.7.29"
     },
     "devDependencies": {
-        "@vitejs/plugin-react": "^4.0.4",
+        "@vitejs/plugin-react": "^4.2.0",
         "jsdom": "^22.1.0",
         "less": "^4.2.0",
-        "ttag-cli": "^1.10.5",
-        "vite": "^4.4.9",
-        "vitest": "^0.34.4"
+        "ttag-cli": "^1.10.9",
+        "vite": "^5.0.2",
+        "vitest": "^0.34.6"
     }
 }

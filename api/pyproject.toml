@@ -2,19 +2,19 @@
 name = "base"
 version = "0.1.0"
 description = "Python base project"
-authors = ["son@zen8labs.com"]
+authors = ["Son Tran <son@zen8labs.com>"]
 
 [tool.poetry.dependencies]
-Django = "^4.2.5"
+python = "^3.11"
+Django = "^4.2.6"
 django-filter = "^21.1"
 django-phonenumber-field = "^6.4.0"
 django-rest-auth = "^0.9.5"
 djangorestframework = "^3.14.0"
 djangorestframework-simplejwt = "^5.3.0"
-phonenumbers = "^8.13.20"
-Pillow = "^9.5.0"
-psycopg2-binary = "^2.9.7"
-python = "^3.11"
+phonenumbers = "^8.13.24"
+pillow = "^10.1.0"
+psycopg2-binary = "^2.9.9"
 requests = "^2.31.0"
 argon2-cffi = "^21.3.0"
 uvicorn = "^0.18.3"

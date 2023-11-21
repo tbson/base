@@ -1,12 +1,12 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { Modal } from "antd";
-import Util from "service/helper/util";
-import Form from "./form";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { Modal } from 'antd';
+import Util from 'service/helper/util';
+import Form from './form';
 
 export class Service {
     static get toggleEvent() {
-        return "TOGGLE_OTP_DIALOG";
+        return 'TOGGLE_OTP_DIALOG';
     }
 
     static toggle(open = true) {
@@ -45,8 +45,8 @@ export default function OTPDialog({ onChange }) {
             keyboard={false}
             maskClosable={false}
             destroyOnClose
-            visible={open}
-            okButtonProps={{ form: Form.formName, key: "submit", htmlType: "submit" }}
+            open={open}
+            okButtonProps={{ form: Form.formName, key: 'submit', htmlType: 'submit' }}
             okText="OK"
             onCancel={() => Service.toggle(false)}
             cancelText="Thoát"
@@ -62,5 +62,5 @@ export default function OTPDialog({ onChange }) {
     );
 }
 
-OTPDialog.displayName = "OTPDialog";
+OTPDialog.displayName = 'OTPDialog';
 OTPDialog.toggle = Service.toggle;

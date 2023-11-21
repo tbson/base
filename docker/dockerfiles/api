@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim-bullseye
+FROM python:3.11.6-slim-bullseye
 
 ENV PYTHONUNBUFFERED 1
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
@@ -6,8 +6,7 @@ RUN mkdir /code
 RUN mkdir /firebase
 WORKDIR /code
 
-ADD ./poetry.lock /code/
+# ADD ./poetry.lock /code/
 ADD ./pyproject.toml /code/
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install --upgrade poetry
+RUN python3 -m pip install --upgrade pip poetry setuptools
 RUN poetry install
