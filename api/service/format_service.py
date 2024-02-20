@@ -1,5 +1,4 @@
 import math
-import phonenumbers
 
 
 class FormatService:
@@ -46,20 +45,6 @@ class FormatService:
         return (
             f"+84{phone_number[1:]}" if phone_number.startswith("0") else phone_number
         )
-
-    @staticmethod
-    def check_valid_phone_number(value):
-        if not value:
-            return False
-
-        try:
-            phone_number = phonenumbers.parse(value, None)
-        except phonenumbers.phonenumberutil.NumberParseException:
-            try:
-                phone_number = phonenumbers.parse(value, "VN")
-            except phonenumbers.phonenumberutil.NumberParseException:
-                return False
-        return bool(phonenumbers.is_valid_number(phone_number))
 
     @staticmethod
     def mask_prefix(input_str: str, mask_length=4) -> str:

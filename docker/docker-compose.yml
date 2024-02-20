@@ -1,8 +1,8 @@
 version: "2.1"
 
 services:
-    base_db:
-        container_name: base_db
+    basecode_db:
+        container_name: basecode_db
         image: "postgres:16.1-alpine3.17"
         environment:
             - PGUSER=${POSTGRES_USER}
@@ -21,14 +21,13 @@ services:
             timeout: 5s
             retries: 18
 
-    base_api:
-        container_name: base_api
+    basecode_api:
+        container_name: basecode_api
         build:
             context: ../api
             dockerfile: ../docker/dockerfiles/api
         volumes:
             - ../api:/code:delegated
-            - ./firebase:/firebase
         environment:
             - TZ=Asia/Ho_Chi_Minh
             - SECRET_KEY=${SECRET_KEY}
@@ -45,9 +44,9 @@ services:
             - DB_USER=${POSTGRES_USER}
             - DB_PASSWORD=${POSTGRES_PASSWORD}
             - DB_NAME=${POSTGRES_DB}
-            - DB_HOST=base_db
+            - DB_HOST=basecode_db
             - DB_PORT=5432
-            - DB_TEST=base_test
+            - DB_TEST=basecode_test
 
             - EMAIL_DOMAIN=${EMAIL_DOMAIN}
             - EMAIL_HOST=${EMAIL_HOST}
@@ -58,13 +57,13 @@ services:
 
             - SAMPLE_PASSWORD=${SAMPLE_PASSWORD}
         depends_on:
-            base_db:
+            basecode_db:
                 condition: service_healthy
         tty: ${DOCKER_TTY}
         command: ${DOCKER_COMMAND}
 
-    base_web:
-      container_name: base_web 
+    basecode_web:
+      container_name: basecode_web 
       build:
         context: ../web
         dockerfile: ../docker/dockerfiles/web
@@ -73,8 +72,8 @@ services:
         - /code/node_modules
       tty: ${DOCKER_TTY}
 
-    base_nginx:
-        container_name: base_nginx
+    basecode_nginx:
+        container_name: basecode_nginx
         build:
             context: ./
             dockerfile: ./dockerfiles/nginx
@@ -87,4 +86,4 @@ services:
             - "443:443"
             - "80:80"
         depends_on:
-            - base_api
+            - basecode_api

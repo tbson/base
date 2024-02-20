@@ -1,9 +1,8 @@
-FROM python:3.11.6-slim-bullseye
+FROM python:3.12.2-slim-bullseye
 
 ENV PYTHONUNBUFFERED 1
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
 RUN mkdir /code
-RUN mkdir /firebase
 WORKDIR /code
 
 # ADD ./poetry.lock /code/

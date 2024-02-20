@@ -44,8 +44,6 @@ REQUIRED_APPS = [
     "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
-    "rest_auth",
-    "phonenumber_field",
 ]
 
 PROJECT_APPS = [
